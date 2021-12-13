@@ -18,3 +18,10 @@
   url(../fonts/inter-black.woff) format('woff');
   font-weight: 900;
 }
+
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url(../fonts/suisseIntl-Regular.woff2) format('woff2'),
+  url(../fonts/suisseIntl-Regular.woff) format('woff');
+  font-weight: 400;
+}

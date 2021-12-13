@@ -23,11 +23,29 @@
   text-align: center;
   letter-spacing: -0.04em;
 }
+@media screen and (min-width: 300px){
+  .promo {
+    min-height: 570px;
+    padding: 0;
+    background-size: 248px;
+    background-position-y: 142px;
+  }
+
+  .promo__title {
+    padding: 207px 0;
+  }
+}
 
 @media screen and (min-width: 566px) {
   .promo__title {
     font-size: 50px;
     line-height: 58px;
+    padding: 326px 0;
+  }
+
+  .promo {
+    min-height: 784px;
+    background-position-y: 224px;
   }
 }
 

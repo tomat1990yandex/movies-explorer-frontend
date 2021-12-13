@@ -33,6 +33,11 @@
 .search__input-button:hover {
   opacity: .7;
 }
+@media screen and (min-width: 300px){
+  .search__input {
+    padding: 10px 12px;
+  }
+}
 
 @media screen and (min-width: 425px) {
   .search {

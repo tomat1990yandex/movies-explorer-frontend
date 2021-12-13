@@ -2,7 +2,7 @@
   color: #000000;
   background: #FDFDFD;
   border-radius: 10px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.05);;
   max-width: 270px;
   max-height: 218px;
 }
@@ -94,6 +94,21 @@
   background-color: #ffffff;
   opacity: .7;
 }
+@media screen and (min-width: 300px) {
+  .movie-card__image {
+    max-width: 300px;
+    max-height: 168px;
+  }
+
+  .movie-card {
+    max-width: 300px;
+    max-height: 235px;
+  }
+
+  .movie-card__title {
+    padding: 14px 12px 12px;
+  }
+}
 
 @media screen and (min-width: 425px) {
   .movie-card__title {
@@ -104,5 +119,15 @@
   .movie-card__duration {
     font-size: 11px;
     /*padding: 18px;*/
+  }
+
+  .movie-card {
+    max-width: 339px;
+    max-height: 257px;
+  }
+
+  .movie-card__image {
+    max-width: 339px;
+    max-height: 190px;
   }
 }

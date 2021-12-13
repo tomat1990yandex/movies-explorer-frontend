@@ -3,7 +3,6 @@
   color: #000000;
   align-items: center;
   justify-content: center;
-
   padding-bottom: 40px;
   border-bottom: 1px solid #E8E8E8;
   margin: 0 14px;
@@ -77,6 +76,7 @@
 
   .checkbox__wrapper {
     margin: 0 30px;
+    padding: 12px 0 39px 0;
   }
 }
 

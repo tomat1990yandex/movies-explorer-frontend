@@ -33,7 +33,7 @@ function Header({menuIsOpened, openMenu, closeMenu, isProfilePageActive, loggedI
                 <div className="profile__icon"/>
               </div>
             </div>
-            <button className={`header__button-burger ${!isProfilePageActive && "header__button-burger_white"}`}
+            <button className={`header__button-burger ${!isProfilePageActive && "header__button-burger"}`}
                     onClick={openMenu}/>
             <Navigation menuIsOpened={menuIsOpened} closeMenu={closeMenu}/>
           </div>

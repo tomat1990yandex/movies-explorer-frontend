@@ -6,7 +6,6 @@
   top: 0;
   left: 0;
   z-index: 10;
-
   background-color: rgba(0, 0, 0, 0.3);
   transition: visibility 0.3s ease-in-out 0.3s;
 }
@@ -24,7 +23,6 @@
   width: 100%;
   max-width: 520px;
   min-height: 100vh;
-
   display: flex;
   flex-direction: column;
   color: black;
@@ -50,18 +48,19 @@
   text-decoration: none;
   color: #000000;
   padding-bottom: 7px;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 18px;
-
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
   transition: opacity 0.1s ease-in-out 0.1s;
 }
 
 .navigation__link:hover, .navigation__close-button:hover {
   opacity: 0.7;
 }
-.navigation__link_is-active {
-
+.navigation__link_is-active:last-of-type {
+  font-weight: 500;
+  border-bottom: 2px #000000 solid;
+  padding-bottom: 4px;
 }
 
 .navigation__link_theme_dark {
@@ -97,11 +96,10 @@
 
 .navigation__close-button {
   position: fixed;
-  top: 14px;
-  right: 14px;
+  top: 21px;
+  right: 21px;
   cursor: pointer;
   padding: 0;
-
   background-image: url("../../images/close-cross.svg");
   background-size: cover;
   background-color: transparent;
@@ -127,6 +125,12 @@
 
   .navigation__link-wrapper:last-of-type {
     padding-bottom: 621px;
+  }
+
+  .navigation__account {
+    margin: 0 18px 0 210px;
+    color: #000000;
+    padding: 0;
   }
 }
 

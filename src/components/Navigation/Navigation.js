@@ -19,7 +19,10 @@ function Navigation({menuIsOpened, closeMenu}) {
             <NavLink to="/saved-movies" className="navigation__link" onClick={closeMenu}>Сохраненные фильмы</NavLink>
           </li>
         </ul>
+        <div className="profile__field-icons">
           <NavLink to="/profile" className="navigation__account" onClick={closeMenu}>Аккаунт</NavLink>
+          <button className="profile__icon" onClick={closeMenu}></button>
+        </div>
       </nav>
       <div className="navigation__close-button" onClick={closeMenu}/>
     </div>

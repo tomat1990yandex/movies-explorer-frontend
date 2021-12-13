@@ -70,6 +70,12 @@
   padding-right: 0;
 }
 
+@media screen and (min-width: 300px) {
+  .about-me {
+    padding: 0 14px;
+  }
+}
+
 @media screen and (min-width: 656px) {
   .about-me__wrapper {
     flex-direction: row-reverse;

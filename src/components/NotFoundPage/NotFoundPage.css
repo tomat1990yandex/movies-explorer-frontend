@@ -41,6 +41,12 @@
   opacity: 0.7;
 }
 
+@media screen and (min-width: 300px) {
+  .not-found-page__go-back-link {
+    padding: 102px 0 0;
+  }
+}
+
 @media screen and (min-width: 717px) {
   .not-found-page {
     padding: 408px 184px 222px;

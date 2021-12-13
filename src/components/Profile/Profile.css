@@ -99,6 +99,12 @@
   color: #FF3055;
 }
 
+@media screen and (min-width: 300px) {
+  .profile__form-actions {
+    padding-top: 361px;
+  }
+}
+
 @media screen and (min-width: 560px) {
   .account__title {
     padding-top: 236px;

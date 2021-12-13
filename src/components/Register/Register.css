@@ -20,6 +20,12 @@
   max-width: 396px;
 }
 
+@media screen and (min-width: 300px) {
+  .register__title {
+    padding: 47px 0 80px;
+  }
+}
+
 @media screen and (min-width: 517px) {
   .register {
     padding: 0 100px;

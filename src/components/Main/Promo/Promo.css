@@ -23,7 +23,7 @@
   text-align: center;
   letter-spacing: -0.04em;
 }
-@media screen and (min-width: 300px){
+@media screen and (min-width: 300px) and (max-width: 565px) {
   .promo {
     min-height: 570px;
     padding: 0;
@@ -36,7 +36,7 @@
   }
 }
 
-@media screen and (min-width: 566px) {
+@media screen and (min-width: 566px) and (max-width: 1070px) {
   .promo__title {
     font-size: 50px;
     line-height: 58px;
@@ -52,5 +52,7 @@
 @media screen and (min-width: 1080px) {
   .promo__title {
     padding: 184px 200px;
+    font-size: 50px;
+    line-height: 58px;
   }
 }

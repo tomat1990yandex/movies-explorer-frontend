@@ -64,6 +64,12 @@
 }
 
 @media screen and (min-width: 450px) {
+  .footer__title {
+    padding: 36px 0 21px;
+  }
+}
+
+@media screen and (min-width: 450px) {
   .footer {
     padding: 0 20px;
   }
@@ -102,7 +108,14 @@
   }
 }
 
-@media screen and (min-width: 717px) {
+@media screen and (min-width: 300px) and (max-width: 716px) {
+  .footer {
+    padding: 0;
+    max-width: 320px;
+  }
+}
+
+@media screen and (min-width: 717px) and (max-width: 990px) {
   .footer {
     padding: 0 30px;
     background-color: #ffffff;
@@ -113,4 +126,10 @@
   .footer {
     padding: 0 70px;
   }
+
+  /*.footer__title {*/
+  /*  padding-bottom: 20px;*/
+  /*  font-size: 13px;*/
+  /*  line-height: 16px;*/
+  /*}*/
 }

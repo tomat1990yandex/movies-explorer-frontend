@@ -86,8 +86,9 @@
   }
 }
 
-@media screen and (min-width: 1281px) {
+@media screen and (min-width: 1279px) {
   .checkbox__wrapper {
     margin: 0 auto;
+    padding:0 0 40px;
   }
 }

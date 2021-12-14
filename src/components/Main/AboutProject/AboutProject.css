@@ -65,7 +65,7 @@
   font-family: 'Suisse Intl', serif;
 }
 
-@media screen and (min-width: 300px) {
+@media screen and (min-width: 300px) and (max-width: 419px) {
   .about-project {
     padding: 0 18px;
   }
@@ -144,5 +144,6 @@
 
   .progress-bar {
     padding: 110px 0 100px;
+    grid-template-columns: 1fr 4fr;
   }
 }

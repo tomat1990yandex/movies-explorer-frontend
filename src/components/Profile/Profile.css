@@ -83,7 +83,6 @@
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;
-
   transition: opacity .3s ease-in-out .3s;
 }
 
@@ -125,6 +124,11 @@
   .profile__field-wrapper:first-child {
     padding: 0 0 16px;
   }
+
+  .profile__action-button {
+    font-size: 13px;
+    line-height: 16px;
+  }
 }
 
 @media screen and (min-width: 769px) {
@@ -144,5 +148,9 @@
 @media screen and (min-width: 1000px) {
   .profile__field-icon {
     display: flex;
+  }
+
+  .profile__form {
+    padding: 122px 0 56px;
   }
 }

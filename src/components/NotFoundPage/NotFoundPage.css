@@ -41,7 +41,7 @@
   opacity: 0.7;
 }
 
-@media screen and (min-width: 300px) {
+@media screen and (min-width: 300px) and (max-width: 716px) {
   .not-found-page__go-back-link {
     padding: 102px 0 0;
   }

@@ -82,12 +82,17 @@
 
   .techs__list {
     padding: 100px 0;
+    grid-template-columns: repeat(7, 90px);
+  }
+
+  .techs__list-tech {
+    padding: 23px 0;
   }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1279px) {
 
   .techs__description {
-    padding: 0 calc(390px - 70px);
+    padding: 0 calc(390px - 52px);
   }
 }

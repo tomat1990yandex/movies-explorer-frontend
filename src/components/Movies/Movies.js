@@ -22,9 +22,9 @@ function Movies({ menuIsOpened, openMenu, closeMenu, isBookmarkPage, loggedIn })
       </div>
       <FilterCheckbox checkboxName={'Короткометражки'}/>
       <MoviesCardList isBookmarkPage={isBookmarkPage}/>
-      <div className="movies__footer-wrapper">
+      <Footer className="movies__footer-wrapper">
         <Footer moviesPage={true}/>
-      </div>
+      </Footer>
     </section>
   );
 }

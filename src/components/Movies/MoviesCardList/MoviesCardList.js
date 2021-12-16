@@ -1,101 +1,124 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import './MoviesCardList.css';
 import MovieCard from "../MoviesCard/MovieCard";
 
-import image_1 from '../../../images/movies-thumbnails/33 words about design.png';
-import image_2 from '../../../images/movies-thumbnails/33 words about design-2.png';
-import image_3 from '../../../images/movies-thumbnails/33 words about design-3.png';
-import image_4 from '../../../images/movies-thumbnails/33 words about design-4.png';
-import image_5 from '../../../images/movies-thumbnails/33 words about design-5.png';
-import image_6 from '../../../images/movies-thumbnails/33 words about design-6.png';
-import image_7 from '../../../images/movies-thumbnails/33 words about design-7.png';
-import image_8 from '../../../images/movies-thumbnails/33 words about design-8.png';
-import image_9 from '../../../images/movies-thumbnails/33 words about design-9.png';
-import image_10 from '../../../images/movies-thumbnails/33 words about design-10.png';
-import image_11 from '../../../images/movies-thumbnails/33 words about design-11.png';
-import image_12 from '../../../images/movies-thumbnails/33 words about design-12.png';
-import image_13 from '../../../images/movies-thumbnails/33 words about design-13.png';
-import image_14 from '../../../images/movies-thumbnails/33 words about design-14.png';
-import image_15 from '../../../images/movies-thumbnails/33 words about design-15.png';
-import image_16 from '../../../images/movies-thumbnails/33 words about design-16.png';
+import {
+  FOR_FIVE_COLUMNS, FOR_MOBILE, FOR_THREE_AND_FOUR_COLUMNS, FOR_TWO_COLUMNS,
+  LAZY_LOAD_DESKTOP_FOUR_COLUMNS, LAZY_LOAD_DESKTOP_THREE_COLUMNS, LAZY_LOAD_MOBILE,
+  SHORT_MOVIE_DURATION
+} from "../../../utils/constants";
+import Preloader from "../Preloader/Preloader";
 
+function MoviesCardList(props) {
 
-function MoviesCardList({ isBookmarkPage }) {
+  const [items, setItems] = useState([]);
+  const [visible, setVisible] = useState(FOR_FIVE_COLUMNS);
+  const [loadMore, setLoadMore] = useState(LAZY_LOAD_DESKTOP_FOUR_COLUMNS);
+  const [screenSize, setScreenSize] = useState({
+    height: window.innerHeight,
+    width: window.innerWidth,
+  });
+
+  function debounce(fn, ms) {
+    let timer;
+    return (_) => {
+      clearTimeout(timer);
+      timer = setTimeout((_) => {
+        timer = null;
+        fn.apply(this, arguments);
+      }, ms);
+    };
+  }
+
+  useEffect(() => {
+    const debounceResizer = debounce(function handleResize() {
+      setScreenSize({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    }, 1000);
+
+    window.addEventListener('resize', debounceResizer);
+
+    return (_) => {
+      window.removeEventListener('resize', debounceResizer);
+    };
+  });
+
+  useEffect(() => {
+    props.movies && setItems(props.movies);
+
+    if (screenSize.width <= 717) {
+      setVisible(FOR_MOBILE);
+      setLoadMore(LAZY_LOAD_MOBILE);
+    }
+
+    if (screenSize.width > 717 && screenSize.width < 1280) {
+      setVisible(FOR_TWO_COLUMNS);
+      setLoadMore(LAZY_LOAD_MOBILE);
+    }
+
+    if (screenSize.width > 1280) {
+      setVisible(FOR_THREE_AND_FOUR_COLUMNS);
+      setLoadMore(LAZY_LOAD_DESKTOP_THREE_COLUMNS);
+    }
+  }, [props.movies, screenSize.width]);
+
+  const loadMoreMovies = () => {
+    setVisible((prev) => prev + loadMore);
+  };
+
+  function filterShortMovies(movie) {
+    return movie.filter((item) => item.duration <= SHORT_MOVIE_DURATION)
+  }
+
   return(
     <section className="movies-card-list">
+      {props.isLoading && <Preloader />}
+      {props.searchError !== '' && <span className="input__error input__error_visible">{props.searchError}</span>}
+      {props.savedMovies?.length === 0 && (
+        <span className="input__error input__error_visible">В ваших закладках нет фильмов</span>
+      )}
       <div className="movies-card-list__movies-wrapper">
-        <MovieCard
-          movieImage={image_1}
-          isBookmarkPage={isBookmarkPage}
-        />
-        <MovieCard
-          movieImage={image_2}
-          isBookmarkPage={isBookmarkPage}
-        />
-        <MovieCard
-          movieImage={image_3}
-          isBookmarkPage={isBookmarkPage}
-        />
-        <MovieCard
-          movieImage={image_4}
-          isBookmarkPage={isBookmarkPage}
-        />
-        <MovieCard
-          movieImage={image_5}
-          isBookmarkPage={isBookmarkPage}
-        />
-        <MovieCard
-          movieImage={image_6}
-          isBookmarkPage={isBookmarkPage}
-        />
-        <MovieCard
-          movieImage={image_7}
-          isBookmarkPage={isBookmarkPage}
-        />
-        <MovieCard
-          movieImage={image_8}
-          isBookmarkPage={isBookmarkPage}
-        />
-        <MovieCard
-          movieImage={image_9}
-          isBookmarkPage={isBookmarkPage}
-        />
-        <MovieCard
-          movieImage={image_10}
-          isBookmarkPage={isBookmarkPage}
-        />
-        <MovieCard
-          movieImage={image_11}
-          isBookmarkPage={isBookmarkPage}
-        />
-        <MovieCard
-          movieImage={image_12}
-          isBookmarkPage={isBookmarkPage}
-        />
-        <MovieCard
-          movieImage={image_13}
-          isBookmarkPage={isBookmarkPage}
-        />
-        <MovieCard
-          movieImage={image_14}
-          isBookmarkPage={isBookmarkPage}
-        />
-        <MovieCard
-          movieImage={image_15}
-          isBookmarkPage={isBookmarkPage}
-        />
-        <MovieCard
-          movieImage={image_16}
-          isBookmarkPage={isBookmarkPage}
-        />
+        {props.movies &&
+          (props.isShortMovie ? filterShortMovies(items) : items)
+            .slice(0, visible)
+            .map((data) => {
+              return (
+                <MovieCard
+                  isBookmarkPage={props.isInBookmark}
+                  key={data.id}
+                  movie={data}
+                  onSaveMovie={props.onSaveMovie}
+                />
+              );
+            })
+        }
+        {props.savedMovies &&
+          (props.isShortMovie ? filterShortMovies(props.savedMovies) : props.savedMovies)
+            .map((data) => {
+              return (
+                <MovieCard
+                  isBookmarkPage={props.isInBookmark}
+                  key={data._id}
+                  savedMovie={data}
+                  onDeleteMovie={props.onDeleteMovie}
+                />
+              );
+            })
+        }
       </div>
       {
-        isBookmarkPage ?
+        props.isBookmarkPage ?
           (
             <div className="saved-movies__footer-gap" />
           ) : (
-            <button className="movies-card-list__lazy-load-button">Ещё</button>
+            props.movies && items.length > visible &&
+            (<button
+              className="movies-card-list__lazy-load-button"
+              onClick={loadMoreMovies}
+            >Ещё</button>)
           )
       }
     </section>

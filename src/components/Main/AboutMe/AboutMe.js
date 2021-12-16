@@ -5,7 +5,6 @@ import photo from '../../../images/dmitriy.jpg';
 import PortfolioTitle from "../../PortfolioTitle/PortfolioTitle";
 
 function AboutMe() {
-  // Функция динамического расчета возраста
   function age(birtDate) {
     const years = ((new Date().getTime() - new Date(birtDate)) / (24 * 3600 * 365.25 * 1000)) | 0;
     const secondDigit = +String(years).charAt(1);

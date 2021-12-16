@@ -5,7 +5,7 @@ import logo from '../../images/logo.svg';
 import './Header.css';
 import Navigation from "../Navigation/Navigation";
 
-function Header({menuIsOpened, openMenu, closeMenu, isProfilePageActive, loggedIn}) {
+function Header({ menuIsOpened, openMenu, closeMenu, isProfilePageActive, loggedIn }) {
 
   return (
     <header className={`header ${isProfilePageActive && "header__theme_white"} ${loggedIn && "header_type_logged-in"}`}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch, useHistory, withRouter } from 'react-router-dom';
+import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
 
 import './App.css';
 import Main from '../Main/Main';
@@ -25,6 +25,11 @@ import {
 } from "../../utils/constants";
 
 function App() {
+
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  const storedMovies = JSON.parse(localStorage.getItem("storedMovies"));
+  const savedMoviesInStore = JSON.parse(localStorage.getItem("savedMovies"));
+  const { handleOnChange, errors, values, isValid, setIsValid } = Validator();
 
   const [loggedIn, setLoggedIn] = useState(isLoggedIn);
 

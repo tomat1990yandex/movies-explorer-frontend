@@ -1,107 +1,85 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import './Profile.css';
 import Header from "../Header/Header";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
-// import Popup from "../Popup/Popup";
+import {useFormWithValidation} from "../../utils/formValidator";
 
-function Profile({
-                   values,
-                   onSubmit,
-                   submitError,
-                   loggedIn,
-                   menuIsOpened,
-                   openMenu,
-                   closeMenu,
-                   isValid,
-                   handleOnChange,
-                   errors,
-                   onLogout,
-                   isLoading,
-                 }) {
-  const user = useContext(CurrentUserContext);
+function Profile(props) {
 
   const [isEditing, setIsEditing] = useState(false);
-  // const [popupIsOpened, setPopupIsOpened] = useState(false);
+  const { values, errors, setValues, isFormValid, handleChange } = useFormWithValidation();
+
+  const currentUser = useContext(CurrentUserContext);
+
+  useEffect(() => {
+    setValues(currentUser);
+  }, [currentUser, setValues])
 
   function handleEditProfile(evt) {
     evt.preventDefault();
     setIsEditing(true);
   }
 
-  const handleSubmit = (evt) => {
+  function handleSubmit(evt) {
     evt.preventDefault();
-    onSubmit(values, setIsEditing, ); //setPopupIsOpened
+    props.onChangeUser(values.name, values.email, setIsEditing);
   }
 
-  // function closePopup() {
-  //   setPopupIsOpened(false);
-  // }
-
-  const errorStatus = (status) => {
-    if(status === '400') {
-      return "При изменении данных что-то пошло не так..."
-    }
-    if(status === '500') {
-      return "Произошла ошибка на сервере"
-    }
-    if(status === '404') {
-      return "Страница не найдена"
-    }
+  function handleCancelEdit() {
+    setIsEditing(false);
   }
-
-  // const errorMsg = errorStatus(submitError);
 
   return(
     <div className="profile">
       <Header
-        loggedIn={loggedIn}
+        loggedIn={props.loggedIn}
         isProfilePageActive={true}
-        menuIsOpened={menuIsOpened}
-        openMenu={openMenu}
-        closeMenu={closeMenu}
+        menuIsOpened={props.menuIsOpened}
+        openMenu={props.openMenu}
+        closeMenu={props.closeMenu}
       />
-      <h2 className="register__title account__title">Привет, {user.name}!</h2>
+      <h2 className="register__title account__title">Привет, {currentUser.name}!</h2>
       <form
-        onSubmit={handleSubmit}
         className="profile__form"
         name="profile-form"
-        autoComplete="off"
+        onSubmit={handleSubmit}
+        noValidate
       >
         <div className="profile__field-wrapper">
           <label className="profile__label">Имя
           </label>
           <input
             type="text"
-            className={`profile__input ${!isValid && "input__field_state_error"}`}
-            disabled={!isEditing}
+            className="profile__input"
             name="name"
-            placeholder={user.name || "Введите новое имя"}
-            onChange={handleOnChange}
-            value={values.name || ''}
+            placeholder="Введите новое имя"
             minLength="2"
             maxLength="30"
+            value={values.name || ""}
+            onChange={handleChange}
+            disabled={!isEditing}
             required
           />
         </div>
-        <span className={`input__error ${!isValid && "input__error_visible"}`}>{errors.name}</span>
+        <span className={`input__error ${!isFormValid && "input__error_visible"}`}>{errors.name}</span>
         <div className="profile__field-wrapper">
           <label className="profile__label">Email
           </label>
           <input
             type="text"
-            className={`profile__input ${!isValid && "input__field_state_error"}`}
-            disabled={!isEditing}
+            className="profile__input"
             name="email"
-            placeholder={user.email || "Введите новый email"}
-            onChange={handleOnChange}
-            value={values.email || ''}
+            placeholder="Введите новый email"
             minLength="7"
             maxLength="200"
+            value={values.email || ""}
+            onChange={handleChange}
+            disabled={!isEditing}
             required
           />
         </div>
-        <span className={`input__error ${!isValid && "input__error_visible"}`}>{errors.email}</span>
+        <span className={`input__error ${!isFormValid && "input__error_visible"}`}>{errors.email}</span>
         <div className="profile__form-actions">
           {!isEditing ? (
             <div className="profile__form-actions-wrapper">
@@ -113,7 +91,7 @@ function Profile({
               <button
                 type="button"
                 className="profile__action-button profile__action-button_action_logout"
-                onClick={onLogout}
+                onClick={props.onLogout}
               >Выйти из аккаунта</button>
             </div>
           ) : (
@@ -121,8 +99,15 @@ function Profile({
               <button
                 className="profile__action-button profile__action-button_action_save"
                 type="submit"
-                disabled={!isValid}
-              >{isLoading ? 'Сохранение...' : 'Сохранить'}</button>
+                disabled={!isFormValid}
+              >{props.isSaving ? "Сохраняем..." : "Сохранить"}
+              </button>
+              <button
+                type="button"
+                className="profile__action-button profile__action-button_action_cancel"
+                onClick={handleCancelEdit}
+              >Отмена
+              </button>
             </div>
           )}
         </div>

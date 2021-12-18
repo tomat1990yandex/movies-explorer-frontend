@@ -2,123 +2,94 @@ import React, {useEffect, useState} from 'react';
 
 import './MoviesCardList.css';
 import MovieCard from "../MoviesCard/MovieCard";
-
-import {
-  FOR_OTHER, FOR_MOBILE, FOR_DESKTOP, FOR_TABLET,
-  LAZY_LOAD_DESKTOP, LAZY_LOAD_TABLET, LAZY_LOAD_MOBILE,
-  SHORT_MOVIE_DURATION
-} from "../../../utils/constants";
 import Preloader from "../Preloader/Preloader";
 
 function MoviesCardList(props) {
 
-  const [items, setItems] = useState([]);
-  const [visible, setVisible] = useState(FOR_OTHER);
-  const [loadMore, setLoadMore] = useState(LAZY_LOAD_DESKTOP);
-  const [screenSize, setScreenSize] = useState({
-    height: window.innerHeight,
-    width: window.innerWidth,
+  const deviceWidth = window.innerWidth;
+  const [cardsNumber, setCardsNumber] = useState(() => {
+
+    if (deviceWidth < 717) {
+      return 5;
+    } else if (deviceWidth < 1000) {
+      return 8;
+    } else if (deviceWidth < 1279 || deviceWidth > 1279) {
+      return 16;
+    }
   });
 
-  function debounce(fn, ms) {
-    let timer;
-    return (_) => {
-      clearTimeout(timer);
-      timer = setTimeout((_) => {
-        timer = null;
-        fn.apply(this, arguments);
-      }, ms);
-    };
+  const [moreCards, setMoreCards] = useState(() => {
+    if (deviceWidth < 717) {
+      return 2;
+    } else if (deviceWidth < 1000) {
+      return 2;
+    } else if (deviceWidth < 1279) {
+      return 4;
+    } else if (deviceWidth > 1279) {
+      return 4;
+    }
+  });
+
+  function handleScreenWidth() {
+    if (deviceWidth < 720) {
+      setCardsNumber(5);
+    } else if (deviceWidth < 920) {
+      setCardsNumber(8);
+    } else if (deviceWidth < 1279 || deviceWidth > 1279) {
+      setCardsNumber(16);
+    }
   }
 
-  useEffect(() => {
-    const debounceResizer = debounce(function handleResize() {
-      setScreenSize({
-        height: window.innerHeight,
-        width: window.innerWidth,
-      });
-    }, 1000);
-
-    window.addEventListener('resize', debounceResizer);
-
-    return (_) => {
-      window.removeEventListener('resize', debounceResizer);
-    };
-  });
-
-  useEffect(() => {
-    props.movies && setItems(props.movies);
-
-    if (screenSize.width <= 717) {
-      setVisible(FOR_MOBILE);
-      setLoadMore(LAZY_LOAD_MOBILE);
-    }
-
-    if (screenSize.width > 717 && screenSize.width < 1280) {
-      setVisible(FOR_TABLET);
-      setLoadMore(LAZY_LOAD_MOBILE);
-    }
-
-    if (screenSize.width > 1280) {
-      setVisible(FOR_DESKTOP);
-      setLoadMore(LAZY_LOAD_TABLET);
-    }
-  }, [props.movies, screenSize.width]);
-
-  const loadMoreMovies = () => {
-    setVisible((prev) => prev + loadMore);
-  };
+  function handleMoviesIncrease() {
+    setCardsNumber(prev => prev + moreCards);
+  }
 
   function filterShortMovies(movie) {
-    return movie.filter((item) => item.duration <= SHORT_MOVIE_DURATION)
+    return movie.filter((item) => item.duration <= 40);
   }
+
+  useEffect(() => {
+    window.addEventListener('resize', handleScreenWidth);
+  }, []);
 
   return(
     <section className="movies-card-list">
-      {props.isLoading && <Preloader />}
-      {props.searchError !== '' && <span className="input__error input__error_visible">{props.searchError}</span>}
-      {props.savedMovies?.length === 0 && (
-        <span className="input__error input__error_visible">В ваших закладках нет фильмов</span>
-      )}
+      {props.isSearching && <Preloader />}
+      <span className={`input__error ${props.isErrorActive && "input__error_visible"}`}>Произошла ошибка во время запроса на сервер</span>
+      <span className={`input__error ${props.notFound && "input__error_visible"}`}>Ничего не найдено</span>
+      <span className={`input__error ${(props.saved && props.movies.length === 0) && "input__error_visible"}`}>Ничего не добавлено в избранное</span>
+
       <div className="movies-card-list__movies-wrapper">
+
         {props.movies &&
-          (props.isShortMovie ? filterShortMovies(items) : items)
-            .slice(0, visible)
-            .map((data) => {
-              return (
+          (props.isShortMovieChecked ? filterShortMovies(props.movies) : props.movies)
+            .slice(0, cardsNumber)
+            .map((movie) => {
+              return(
                 <MovieCard
-                  isBookmarkPage={props.isInBookmark}
-                  key={data.id}
-                  movie={data}
-                  onSaveMovie={props.onSaveMovie}
-                />
-              );
-            })
-        }
-        {props.savedMovies &&
-          (props.isShortMovie ? filterShortMovies(props.savedMovies) : props.savedMovies)
-            .map((data) => {
-              return (
-                <MovieCard
-                  isBookmarkPage={props.isInBookmark}
-                  key={data._id}
-                  savedMovie={data}
+                  movie={movie}
+                  key={props.saved ? movie.movieId : movie.id}
+                  saved={props.saved}
+                  onMovieSave={props.onMovieSave}
                   onDeleteMovie={props.onDeleteMovie}
+                  savedMovies={props.savedMovies}
                 />
               );
-            })
-        }
+            })}
+
       </div>
       {
         props.isBookmarkPage ?
           (
             <div className="saved-movies__footer-gap" />
           ) : (
-            props.movies && items.length > visible &&
-            (<button
+            props.movies.length > cardsNumber &&
+            <button
               className="movies-card-list__lazy-load-button"
-              onClick={loadMoreMovies}
-            >Ещё</button>)
+              onClick={handleMoviesIncrease}
+            >
+              Ещё
+            </button>
           )
       }
     </section>

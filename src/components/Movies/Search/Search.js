@@ -3,26 +3,46 @@ import React from 'react';
 import './Search.css';
 
 function Search(props) {
-  return(
-    <form
-      onSubmit={props.onSubmit}
-      className="search"
-      name="search"
-      noValidate
-    >
-      <input
-        type="text"
-        placeholder="Фильм"
-        className="search__input"
-        value={props.searchValue || ''}
-        onChange={props.onChange}
-        required
-      />
-      <button
-        type="submit"
-        className="search__input-button"
-      />
-    </form>
+
+  const [search, setSearch] = useState('');
+  const [isSearchValid, setIsSearchValid] = useState(true);
+
+  function handleSearchChange(evt) {
+    setSearch(evt.target.value);
+    setIsSearchValid(evt.target.checkValidity());
+  }
+
+  function handleSearchSavedMovies(evt) {
+    evt.preventDefault();
+    props.onSearchSavedMovies(search);
+  }
+
+  function handleSearchMovies(evt) {
+    evt.preventDefault();
+    props.onSearchMovies(search);
+  }
+
+  return (
+    <>
+      <form
+        className="search"
+        name="search"
+        onSubmit={props.saved ? handleSearchSavedMovies : handleSearchMovies}
+      >
+        <input
+          type="text"
+          placeholder="Фильм"
+          className="search__input"
+          value={search || ''}
+          onChange={handleSearchChange}
+        />
+        <button
+          type="submit"
+          className="search__input-button"
+        />
+      </form>
+      <span className={`input__error ${!isSearchValid && "input__error_visible"}`}>Введите название фильма</span>
+    </>
   );
 }
 

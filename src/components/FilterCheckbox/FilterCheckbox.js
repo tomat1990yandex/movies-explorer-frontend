@@ -10,7 +10,8 @@ function FilterCheckbox(props) {
           type="checkbox"
           name="short-movie-checkbox"
           className="checkbox__input"
-          onChange={props.handleCheck}
+          onChange={props.onChange}
+          checked={props.isChecked}
         />
         <span className="checkbox__switcher"/>
       </label>

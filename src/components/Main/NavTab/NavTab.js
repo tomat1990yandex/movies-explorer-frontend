@@ -3,7 +3,6 @@ import React from 'react';
 import './NavTab.css';
 import { Link } from 'react-scroll';
 
-
 function NavTab() {
   return(
     <nav className="nav-tab">

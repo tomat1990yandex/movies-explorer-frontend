@@ -3,29 +3,27 @@ import React from 'react';
 import './Form.css';
 import {NavLink} from "react-router-dom";
 
-function Form({ name, buttonText, linkText, url, text, children, onSubmit, isValid, errorMsg }) {
+function Form(props) {
   return(
     <form
-      name={name}
+      name={props.name}
       className="form"
-      onSubmit={onSubmit}
+      onSubmit={props.onSubmit}
       noValidate
     >
 
-      { children }
+      { props.children }
 
-      <span className={`input__error ${errorMsg && "input__error_visible"}`}>
-        {errorMsg}
-      </span>
-      <span className={`input__error ${!isValid && "input__error_visible"}`}>
-        Одно из полей не заполнено или заполнено не корректно
-      </span>
-      <button className={`form__button ${!isValid && 'form__button_disabled'}`} disabled={!isValid}>
-        {buttonText}
+      <span className={`input__error ${!props.isValid && "input__error_visible"}`}>{props.errorMsg}</span>
+      <button
+        type="submit"
+        className={`form__button ${!props.disabled && 'form__button_disabled'}`}
+      >
+        {props.buttonText}
       </button>
       <div className="form__subText-wrapper">
-        <p className="form__text">{text}</p>
-        <NavLink to={url} className="form__link">{linkText}</NavLink>
+        <p className="form__text">{props.text}</p>
+        <NavLink to={props.url} className="form__link" onClick={props.onClear}>{props.linkText}</NavLink>
       </div>
     </form>
   );

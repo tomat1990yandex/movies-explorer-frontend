@@ -2,22 +2,23 @@ import React from 'react';
 
 import './Input.css';
 
-function Input({ type, id, inputTitle, name, minLength, maxLength, errorText, value, onChange, isValid }) {
+function Input(props) {
   return(
     <div className="input">
-      <label className="input__label">{inputTitle}</label>
+      <label className="input__label">{props.inputTitle}</label>
       <input
         required
-        className={`input__field ${!isValid && `input__field_state_error`}`}
-        type={type}
-        id={id}
-        name={name}
-        minLength={minLength}
-        maxLength={maxLength}
-        value={value}
-        onChange={onChange}
+        className={`input__field ${!props.isValid && "input__field_state_error"}`}
+        type={props.type}
+        name={props.name}
+        minLength={props.minLength}
+        maxLength={props.maxLength}
+        value={props.value || ''}
+        onChange={props.onChange}
       />
-      <span className={`input__error ${!isValid && "input__error_visible"}`}>{errorText}</span>
+      <span className={`input__error ${!props.isValid && "input__error_visible"}`}>
+        {props.errorText}
+      </span>
     </div>
   );
 }

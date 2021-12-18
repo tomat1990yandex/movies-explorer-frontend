@@ -21,25 +21,32 @@ function Movies(props) {
 
       <div className="movies__search-wrapper">
         <Search
-          onSubmit={props.onSubmit}
-          onChange={props.onChange}
-          handleCheck={props.handleShortCheck}
-          searchValue={props.searchValue}
+          onSearchMovies={props.onSearchMovies}
+          onShortMoviesCheck={props.onShortMoviesCheck}
+          saved={false}
+          isChecked={props.isShortMovieChecked}
         />
       </div>
 
       <FilterCheckbox
         checkboxName={'Короткометражки'}
-        handleCheck={props.handleShortCheck}
+        onChange={props.onShortMoviesCheck}
+        isChecked={props.isChecked}
       />
 
       <MoviesCardList
-        isInBookmark={false}
         movies={props.movies}
-        isLoading={props.isLoading}
-        searchError={props.searchError}
-        onSaveMovie={props.onSaveMovie}
-        isShortMovie={props.isShortMovie}
+        isSearching={props.isSearching}
+        notFound={props.notFound}
+        isErrorActive={props.isErrorActive}
+        isBookmarkPage={props.isBookmarkPage}
+        onMovieSave={props.onMovieSave}
+        onDeleteMovie={props.onDeleteMovie}
+        saved={false}
+        savedMovies={props.savedMovies}
+        isMobile={props.isMobile}
+        isTablet={props.isTablet}
+        isShortMovieChecked={props.isShortMovieChecked}
       />
 
       <div className="movies__footer-wrapper">

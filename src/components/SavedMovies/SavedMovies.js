@@ -3,18 +3,15 @@ import React from 'react';
 import './SavedMovies.css';
 import Movies from "../Movies/Movies";
 
-function SavedMovies(props) {
+function SavedMovies({ menuIsOpened, openMenu, closeMenu, loggedIn }) {
   return(
     <Movies
-      loggedIn={props.loggedIn}
+      loggedIn={loggedIn}
       isProfilePageActive={true}
       isBookmarkPage={true}
-      menuIsOpened={props.menuIsOpened}
-      openMenu={props.openMenu}
-      closeMenu={props.closeMenu}
-      onSubmit={props.onSubmit}
-      onChange={props.onChange}
-      searchValue={props.searchValue}
+      menuIsOpened={menuIsOpened}
+      openMenu={openMenu}
+      closeMenu={closeMenu}
     />
   );
 }

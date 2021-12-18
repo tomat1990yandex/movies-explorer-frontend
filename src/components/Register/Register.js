@@ -5,67 +5,44 @@ import logo from "../../images/logo.svg";
 import {NavLink} from "react-router-dom";
 import Form from "../Form/Form";
 import Input from "../Input/Input";
+import { useFormWithValidation } from "../../utils/formValidator";
 
-function Register({
-                    onRegister,
-                    handleOnChange,
-                    values,
-                    isLoading,
-                    errors,
-                    isValid,
-                    submitError,
-                  }) {
+function Register(props) {
 
-  const handleSubmit = (evt) => {
+  const { values, handleChange, errors, isFormValid } = useFormWithValidation();
+
+  function handleRegister(evt) {
     evt.preventDefault();
-    onRegister(values);
+    props.onRegister(values.name, values.password, values.email);
+    props.onClear();
   }
-
-  const errorStatus = (status) => {
-    if(status === '400') {
-      return "При регистрации что-то пошло не так..."
-    }
-    if(status === '409') {
-      return "Пользователь с таким email уже существует"
-    }
-    if(status === '500') {
-      return "Произошла ошибка на сервере"
-    }
-    if(status === '404') {
-      return "Страница не найдена"
-    }
-  }
-
-  const errorMsg = errorStatus(submitError);
 
   return(
     <div className="register">
       <NavLink to="/"><img src={logo} alt="Логотип Movie Explorer" className="header__logo register__header"/></NavLink>
       <h2 className="register__title">Добро пожаловать!</h2>
       <Form
-        buttonText={isLoading? 'Загружаем...' : 'Зарегистрироваться'}
+        buttonText={props.isSaving ? 'Загружаем...' : 'Зарегистрироваться'}
         text="Уже зарегистрированы?"
         url="/signin"
         linkText="Войти"
-        onSubmit={handleSubmit}
-        isValid={isValid}
-        errorMsg={errorMsg}
-        isLoading={isLoading}
+        onSubmit={handleRegister}
+        disabled={isFormValid}
+        onClear={props.onClear}
+        errorMsg={props.errorMessage}
       >
         <Input
-          id="user-name"
           type="text"
-          name="username"
+          name="name"
           inputTitle="Имя"
           minLength="2"
-          maxLength="30"
-          errorText={errors.username}
-          value={values.username || ''}
-          onChange={handleOnChange}
-          isValid={isValid}
+          maxLength="20"
+          errorText={errors.name}
+          value={values.name || ''}
+          onChange={handleChange}
+          isValid={isFormValid}
         />
         <Input
-          id="user-email"
           type="email"
           name="email"
           inputTitle="E-mail"
@@ -73,11 +50,10 @@ function Register({
           maxLength="200"
           errorText={errors.email}
           value={values.email || ''}
-          onChange={handleOnChange}
-          isValid={isValid}
+          onChange={handleChange}
+          isValid={isFormValid}
         />
         <Input
-          id="user-password"
           type="password"
           name="password"
           inputTitle="Пароль"
@@ -85,8 +61,8 @@ function Register({
           maxLength="200"
           errorText={errors.password}
           value={values.password || ''}
-          onChange={handleOnChange}
-          isValid={isValid}
+          onChange={handleChange}
+          isValid={isFormValid}
         />
       </Form>
     </div>

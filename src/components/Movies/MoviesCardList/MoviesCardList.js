@@ -4,8 +4,8 @@ import './MoviesCardList.css';
 import MovieCard from "../MoviesCard/MovieCard";
 
 import {
-  FOR_FIVE_COLUMNS, FOR_MOBILE, FOR_THREE_AND_FOUR_COLUMNS, FOR_TWO_COLUMNS,
-  LAZY_LOAD_DESKTOP_FOUR_COLUMNS, LAZY_LOAD_DESKTOP_THREE_COLUMNS, LAZY_LOAD_MOBILE,
+  FOR_OTHER, FOR_MOBILE, FOR_DESKTOP, FOR_TABLET,
+  LAZY_LOAD_DESKTOP, LAZY_LOAD_TABLET, LAZY_LOAD_MOBILE,
   SHORT_MOVIE_DURATION
 } from "../../../utils/constants";
 import Preloader from "../Preloader/Preloader";
@@ -13,8 +13,8 @@ import Preloader from "../Preloader/Preloader";
 function MoviesCardList(props) {
 
   const [items, setItems] = useState([]);
-  const [visible, setVisible] = useState(FOR_FIVE_COLUMNS);
-  const [loadMore, setLoadMore] = useState(LAZY_LOAD_DESKTOP_FOUR_COLUMNS);
+  const [visible, setVisible] = useState(FOR_OTHER);
+  const [loadMore, setLoadMore] = useState(LAZY_LOAD_DESKTOP);
   const [screenSize, setScreenSize] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
@@ -55,13 +55,13 @@ function MoviesCardList(props) {
     }
 
     if (screenSize.width > 717 && screenSize.width < 1280) {
-      setVisible(FOR_TWO_COLUMNS);
+      setVisible(FOR_TABLET);
       setLoadMore(LAZY_LOAD_MOBILE);
     }
 
     if (screenSize.width > 1280) {
-      setVisible(FOR_THREE_AND_FOUR_COLUMNS);
-      setLoadMore(LAZY_LOAD_DESKTOP_THREE_COLUMNS);
+      setVisible(FOR_DESKTOP);
+      setLoadMore(LAZY_LOAD_TABLET);
     }
   }, [props.movies, screenSize.width]);
 

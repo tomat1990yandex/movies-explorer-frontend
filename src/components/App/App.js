@@ -117,7 +117,7 @@ function App() {
     history.push('/');
   }
 
-  function handleEditProfile(data, setIsEditing, setPopupIsOpened) {
+  function handleEditProfile(data, setIsEditing, setPopupIsOpened ) {
     setIsLoading(true);
     updateProfile(data.name, data.email)
       .then((res) => {

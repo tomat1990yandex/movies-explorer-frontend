@@ -10,7 +10,6 @@
 .movie-card__content {
   margin: 0;
   padding: 0;
-
   display: flex;
   flex-direction: column;
 }
@@ -23,7 +22,6 @@
 .movie-card__title {
   margin: 0;
   padding: 14px;
-
   font-weight: 500;
   font-size: 13px;
   line-height: 16px;
@@ -45,6 +43,7 @@
   height: 100%;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  object-fit: cover;
 }
 
 .movie-card__button {
@@ -98,6 +97,7 @@
   .movie-card__image {
     max-width: 300px;
     max-height: 168px;
+    min-height: 168px;
   }
 
   .movie-card {
@@ -129,5 +129,19 @@
   .movie-card__image {
     max-width: 339px;
     max-height: 190px;
+    min-height: 190px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .movie-card {
+    max-width: 339px;
+    max-height: 218px;
+  }
+
+  .movie-card__image {
+    max-width: 339px;
+    max-height: 151px;
+    min-height: 151px;
   }
 }

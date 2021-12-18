@@ -3,7 +3,7 @@ import React, {useContext, useState} from 'react';
 import './Profile.css';
 import Header from "../Header/Header";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
-import Popup from "../Popup/Popup";
+// import Popup from "../Popup/Popup";
 
 function Profile({
                    values,
@@ -22,7 +22,7 @@ function Profile({
   const user = useContext(CurrentUserContext);
 
   const [isEditing, setIsEditing] = useState(false);
-  const [popupIsOpened, setPopupIsOpened] = useState(false);
+  // const [popupIsOpened, setPopupIsOpened] = useState(false);
 
   function handleEditProfile(evt) {
     evt.preventDefault();
@@ -31,12 +31,12 @@ function Profile({
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    onSubmit(values, setIsEditing, setPopupIsOpened);
+    onSubmit(values, setIsEditing, ); //setPopupIsOpened
   }
 
-  function closePopup() {
-    setPopupIsOpened(false);
-  }
+  // function closePopup() {
+  //   setPopupIsOpened(false);
+  // }
 
   const errorStatus = (status) => {
     if(status === '400') {
@@ -50,7 +50,7 @@ function Profile({
     }
   }
 
-  const errorMsg = errorStatus(submitError);
+  // const errorMsg = errorStatus(submitError);
 
   return(
     <div className="profile">

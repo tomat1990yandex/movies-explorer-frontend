@@ -168,9 +168,9 @@
 }
 
 @media screen and (min-width: 768px){
-  .header__theme_white {
-    padding: 0 70px;
-  }
+  /*.header__theme_white {*/
+  /*  padding: 0 70px;*/
+  /*}*/
 
 
   .header__register {

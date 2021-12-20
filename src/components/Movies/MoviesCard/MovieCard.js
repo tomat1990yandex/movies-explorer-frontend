@@ -75,9 +75,15 @@ function MovieCard(props) {
               onClick={handleDeleteMovie}
             />
             :
-            <button
-              onClick={isSaved ? handleDisLike : handleLikeButtonClick}
-            />
+            // <button
+            //   onClick={isSaved ? handleDisLike : handleLikeButtonClick}
+            // />
+          <button className={`movie-card__button
+                  ${isSaved && "movie-card__button_type_in-bookmark"}
+                  ${props.isBookmarkPage && "movie-card__button_type_remove-bookmark"}`}
+                  onClick={props.saved ? handleDisLike : handleLikeButtonClick}>
+            {isSaved || props.isBookmarkPage ? '' : ''}
+          </button>
           }
         </figcaption>
         <p className="movie-card__duration">{duration(props.movie.duration)}</p>

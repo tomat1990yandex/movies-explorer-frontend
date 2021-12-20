@@ -9,7 +9,7 @@ import {useFormWithValidation} from "../../utils/formValidator";
 
 function Login(props) {
 
-  const { values, handleChange, isFormValid, errors, setValues } = useFormWithValidation();
+  const { values, handleChange, isFormValid, errors} = useFormWithValidation();
 
   function handleLogin(evt) {
     evt.preventDefault();
@@ -53,7 +53,7 @@ function Login(props) {
           onChange={handleChange}
           isValid={isFormValid}
         />
-        <div className="form__spacer"></div>
+        <div className="form__spacer"/>
       </Form>
     </div>
   );

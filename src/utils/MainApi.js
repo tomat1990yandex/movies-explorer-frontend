@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'https://api.diminenn-me.students.nomoredomains.rocks';
 
 export function register (name, password, email) {
   return fetch(`${BASE_URL}/signup`, {

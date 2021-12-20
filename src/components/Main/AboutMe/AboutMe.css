@@ -48,14 +48,13 @@
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: start;
+  /*justify-content: start;*/
 }
 
 .about-me__contacts-link {
   color: #000000;
   text-decoration: none;
   padding-right: 26px;
-
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;

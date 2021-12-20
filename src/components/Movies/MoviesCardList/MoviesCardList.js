@@ -18,7 +18,7 @@ function MoviesCardList(props) {
     }
   });
 
-  const [moreCards, setMoreCards] = useState(() => {
+  const [moreCards] = useState(() => {
     if (deviceWidth < 717) {
       return 2;
     } else if (deviceWidth < 1000) {

@@ -17,7 +17,6 @@ class MainApi {
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-      credentials: "include",
     }).then((res) => this._handlePromise(res));
   }
 
@@ -27,7 +26,6 @@ class MainApi {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
-      credentials: "include",
       body: JSON.stringify({
         email: email,
         name: name,
@@ -38,7 +36,6 @@ class MainApi {
   getMovies() {
     return fetch(`${this._baseUrl}/movies`, {
       headers: this._headers,
-      credentials: "include",
     }).then((res) => this._handlePromise(res));
   }
 
@@ -76,7 +73,6 @@ class MainApi {
     return fetch(`${this._baseUrl}/movies`, {
       method: "POST",
       headers: this._headers,
-      credentials: "include",
       body: JSON.stringify({
         country: finalCountry,
         director: finalDirector,
@@ -97,7 +93,6 @@ class MainApi {
     return fetch(`${this._baseUrl}/movies/${id}`, {
       method: "DELETE",
       headers: this._headers,
-      credentials: "include",
     }).then((res) => this._handlePromise(res));
   }
 
@@ -107,7 +102,6 @@ class MainApi {
     return fetch(`${this._baseUrl}/signup`, {
       method: "POST",
       headers: this._headers,
-      credentials: "include",
       body: JSON.stringify({
         email: email,
         password: password,
@@ -122,7 +116,6 @@ class MainApi {
     return fetch(`${this._baseUrl}/signin`, {
       method: "POST",
       headers: this._headers,
-      credentials: "include",
       body: JSON.stringify({
         email: email,
         password: password,
@@ -134,7 +127,6 @@ class MainApi {
     return fetch(`${this._baseUrl}/signout`, {
       method: "POST",
       headers: this._headers,
-      credentials: "include",
     }).then((res) => this._handlePromise(res));
   }
 }

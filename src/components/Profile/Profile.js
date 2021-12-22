@@ -1,118 +1,85 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useEffect, useContext } from "react";
 
-import './Profile.css';
-import Header from "../Header/Header";
-import {CurrentUserContext} from "../../contexts/CurrentUserContext";
-import {useFormWithValidation} from "../../utils/formValidator";
+import { Link } from "react-router-dom";
 
-function Profile(props) {
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-  const [isEditing, setIsEditing] = useState(false);
-  const { values, errors, setValues, isFormValid, handleChange } = useFormWithValidation();
+import useFormAndValidation from "../../utils/useFormAndValidation";
+
+import Preloader from "../Movies/Preloader/Preloader";
+
+import "./Profile.css";
+
+function Profile({ onUpdate, isLoading, onLogout }) {
+  const { values, errors, isValid, handleChange, resetForm } =
+    useFormAndValidation();
 
   const currentUser = useContext(CurrentUserContext);
 
-  useEffect(() => {
-    setValues(currentUser);
-  }, [currentUser, setValues])
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onUpdate({ ...values, email: currentUser.email });
+    resetForm();
+  };
 
-  function handleEditProfile(evt) {
-    evt.preventDefault();
-    setIsEditing(true);
-  }
+  useEffect(() => {}, [currentUser]);
 
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    props.onChangeUser(values.name, values.email, setIsEditing);
-  }
-
-  function handleCancelEdit() {
-    setIsEditing(false);
-  }
-
-  return(
-    <div className="profile">
-      <Header
-        loggedIn={props.loggedIn}
-        isProfilePageActive={true}
-        menuIsOpened={props.menuIsOpened}
-        openMenu={props.openMenu}
-        closeMenu={props.closeMenu}
-      />
-      <h2 className="register__title account__title">Привет, {currentUser.name}!</h2>
-      <form
-        className="profile__form"
-        name="profile-form"
-        onSubmit={handleSubmit}
-        noValidate
-      >
-        <div className="profile__field-wrapper">
-          <label className="profile__label">Имя
-          </label>
-          <input
-            type="text"
-            className="profile__input"
-            name="name"
-            placeholder="Введите новое имя"
-            minLength="2"
-            maxLength="30"
-            value={values.name || ""}
-            onChange={handleChange}
-            disabled={!isEditing}
-            required
-          />
-        </div>
-        <span className={`input__error ${!isFormValid && "input__error_visible"}`}>{errors.name}</span>
-        <div className="profile__field-wrapper">
-          <label className="profile__label">Email
-          </label>
-          <input
-            type="text"
-            className="profile__input"
-            name="email"
-            placeholder="Введите новый email"
-            minLength="7"
-            maxLength="200"
-            value={values.email || ""}
-            onChange={handleChange}
-            disabled={!isEditing}
-            required
-          />
-        </div>
-        <span className={`input__error ${!isFormValid && "input__error_visible"}`}>{errors.email}</span>
-        <div className="profile__form-actions">
-          {!isEditing ? (
-            <div className="profile__form-actions-wrapper">
-              <button
-                type="button"
-                className="profile__action-button profile__action-button_action_edit"
-                onClick={handleEditProfile}
-              >Редактировать</button>
-              <button
-                type="button"
-                className="profile__action-button profile__action-button_action_logout"
-                onClick={props.onLogout}
-              >Выйти из аккаунта</button>
+  return (
+    <section className="profile">
+      <form noValidate onSubmit={handleSubmit} className="profile__form">
+        <h2 className="profile__title">Привет, {currentUser.name}!</h2>
+        {isLoading ? (
+          <Preloader />
+        ) : (
+          <>
+            <div className="profile__input-area">
+              <label className="profile__label">Имя</label>
+              <input
+                name="name"
+                type="text"
+                placeholder={currentUser.name}
+                value={values.name || ""}
+                minLength="2"
+                maxLength="30"
+                pattern="[a-zA-Zа-яА-Я\sёЁ-]{2,30}"
+                required
+                onChange={handleChange}
+                className="profile__input"
+              />
             </div>
-          ) : (
-            <div className="profile__form-actions-wrapper">
-              <button
-                className="profile__action-button profile__action-button_action_save"
-                type="submit"
-                disabled={!isFormValid}
-              >{props.isSaving ? "Сохраняем..." : "Сохранить"}
-              </button>
-              <button
-                type="button"
-                className="profile__action-button profile__action-button_action_cancel"
-                onClick={handleCancelEdit}
-              >Отмена
-              </button>
+            <span className="profile__input-error">{errors.name}</span>
+            <div className="profile__input-area">
+              <label className="profile__label">E-mail</label>
+              <input
+                name="userEmail"
+                type="email"
+                readOnly
+                placeholder={currentUser.email}
+                value={values.email || ""}
+                className="profile__input"
+                disabled={true}
+              />
             </div>
-          )}
-        </div>
+            <button
+              disabled={isValid === false && true}
+              type="submit"
+              className="profile__button"
+            >
+              Редактировать
+            </button>
+            <Link to="/">
+              <button
+                type="reset"
+                onClick={onLogout}
+                className="profile__button profile__button_red"
+              >
+                Выйти из аккаунта
+              </button>
+            </Link>
+          </>
+        )}
       </form>
-    </div>
+    </section>
   );
 }
 

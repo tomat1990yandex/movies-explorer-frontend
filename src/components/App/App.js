@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { Route, Switch, Redirect, useHistory, useLocation } from "react-router-dom";
 
@@ -157,6 +157,7 @@ function App() {
           setIsLoading(false);
           setCurrentUser(userData);
           setLoggedIn(true);
+          console.log(userData);
           setSavedMovies(movies);
         })
         .catch((err) => {

@@ -22,7 +22,7 @@
   padding: 0;
   text-decoration: none;
   opacity: 1;
-  transition: opacity 0.2s ease-in-out 0.2s;
+  /*transition: opacity 0.2s ease-in-out 0.2s;*/
   transition: font-weight 0.1s ease-in-out 0.1s;
 }
 
@@ -176,6 +176,7 @@
   }
 
   .header__burger-menu {
+    display: block;
     width: 44px;
     height: 44px;
   }
@@ -187,6 +188,10 @@
     justify-content: center;
     align-items: center;
     margin: -1px 655px 0 0;
+  }
+
+  .header__burger-menu {
+    display: none;
   }
 
   .header__icon-menu {
@@ -203,5 +208,9 @@
     font-size: 14px;
     line-height: 16px;
     margin-right: 17px;
+  }
+
+  .header__button {
+    display: flex;
   }
 }

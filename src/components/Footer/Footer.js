@@ -1,33 +1,61 @@
-import React from 'react';
+import React from "react";
 
-import './Footer.css';
+import "./Footer.css";
 
-function Footer({ moviesPage }) {
-  const currentYear = new Date().getFullYear();
+function Footer({ location }) {
+  let footerClassName;
 
-  return(
-    <section className={`footer ${moviesPage && 'footer__movies-media'}`}>
-      <h3 className="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</h3>
-      <div className="footer__wrapper">
-        <div className="footer__links-wrapper">
-          <ul className="footer__links">
-            <li className="footer__item">
-              <a href="https://praktikum.yandex.ru/" className="footer__item-link"
-                 target="_blank" rel="noreferrer">Яндекс.Практикум</a>
-            </li>
-            <li className="footer__item">
-              <a href="https://github.com/tomat1990yandex" className="footer__item-link"
-                 target="_blank" rel="noreferrer" >Github</a>
-            </li>
-            <li className="footer__item">
-              <a href="https://www.facebook.com/diminenn" className="footer__item-link"
-                 target="_blank" rel="noreferrer" >Facebook</a>
-            </li>
-          </ul>
+  switch (location) {
+    case "/movies":
+      footerClassName = "footer";
+      break;
+    case "/saved-movies":
+      footerClassName = "footer";
+      break;
+    case "/":
+      footerClassName = "footer";
+      break;
+    default:
+      footerClassName = "footer footer_hidden";
+  }
+
+  return (
+    <footer className={footerClassName}>
+      <div className="footer__container">
+        <div className="footer__naming">
+          Учебный проект Яндекс.Практикум х BeatFilm.
         </div>
-        <p className="footer__copyright">&copy;{currentYear === 2021 ? '2021': `2021 — ${currentYear}`}</p>
+        <div className="footer__contacts">
+          <p className="footer__year">&copy; 2021</p>
+          <nav className="footer__links">
+            <a
+              target="_blank"
+              href="https://praktikum.yandex.ru"
+              rel="noreferrer"
+              className="footer__link"
+            >
+              Яндекс.Практикум
+            </a>
+            <a
+              target="_blank"
+              href="https://github.com/yandex-praktikum"
+              rel="noreferrer"
+              className="footer__link"
+            >
+              Github
+            </a>
+            <a
+              target="_blank"
+              href="https://www.facebook.com/yandex.praktikum"
+              rel="noreferrer"
+              className="footer__link"
+            >
+              Facebook
+            </a>
+          </nav>
+        </div>
       </div>
-    </section>
+    </footer>
   );
 }
 

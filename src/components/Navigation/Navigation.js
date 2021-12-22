@@ -1,31 +1,41 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import './Navigation.css';
-import {NavLink} from "react-router-dom";
+import "./Navigation.css";
 
-function Navigation({ menuIsOpened, closeMenu }) {
-  return(
-    <div className={`navigation__wrapper ${!menuIsOpened && "navigation__wrapper_hidden"}`}>
-      <nav className="navigation">
-        <ul className="navigation__links">
-          <li className="navigation__link-wrapper">
-            <NavLink to="/" className="navigation__link" onClick={closeMenu}>Главная</NavLink>
-          </li>
-          <li className="navigation__link-wrapper">
-            <NavLink to="/movies" className="navigation__link navigation__link_is-active"
-                     onClick={closeMenu}>Фильмы</NavLink>
-          </li>
-          <li className="navigation__link-wrapper">
-            <NavLink to="/saved-movies" className="navigation__link" onClick={closeMenu}>Сохраненные фильмы</NavLink>
-          </li>
-        </ul>
-        <div className="profile__field-icons">
-          <NavLink to="/profile" className="navigation__account" onClick={closeMenu}>Аккаунт</NavLink>
-          <button className="profile__icon" onClick={closeMenu}/>
-        </div>
-      </nav>
-      <div className="navigation__close-button" onClick={closeMenu}/>
-    </div>
+import closeIcon from "../../images/close-icon.svg";
+import profileIcon from "../../images/profile-icon.svg";
+
+function Navigation({ isOpen, onClose }) {
+  return (
+    <section className={`section popup ${isOpen && "popup_opened"}`}>
+      <img
+        src={closeIcon}
+        alt="Иконка закрытия"
+        className="popup__close-icon"
+        onClick={onClose}
+      />
+      <div className="popup__links">
+        <Link to="/" className="popup__link" onClick={onClose}>
+          Главная
+        </Link>
+        <Link to="/movies" className="popup__link" onClick={onClose}>
+          Фильмы
+        </Link>
+        <Link to="/saved-movies" className="popup__link" onClick={onClose}>
+          Сохранённые фильмы
+        </Link>
+      </div>
+
+      <Link to="/profile" className="popup__button" onClick={onClose}>
+        <img
+          src={profileIcon}
+          alt="Иконка личного кабинета"
+          className="popup__profile-icon"
+        />
+        <p className="popup__caption">Аккаунт</p>
+      </Link>
+    </section>
   );
 }
 

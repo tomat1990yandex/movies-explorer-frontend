@@ -1,98 +1,111 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState, useEffect } from "react";
 
-import './MoviesCardList.css';
-import MovieCard from "../MoviesCard/MovieCard";
+import "./MoviesCardList.css";
+
+import MoviesCard from "../MoviesCard/MoviesCard";
 import Preloader from "../Preloader/Preloader";
 
-function MoviesCardList(props) {
+function MoviesCardList({
+  movies,
+  isLoading,
+  isLoadingSuccess,
+  isSearchActive,
+  onSave,
+  onDelete,
+}) {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
-  const deviceWidth = window.innerWidth;
-  const [cardsNumber, setCardsNumber] = useState(() => {
+  let maxCardsQuantity;
+  let increment;
 
-    if (deviceWidth < 717) {
-      return 5;
-    } else if (deviceWidth < 1000) {
-      return 8;
-    } else if (deviceWidth < 1279 || deviceWidth > 1279) {
-      return 16;
-    }
-  });
-
-  const [moreCards] = useState(() => {
-    if (deviceWidth < 717) {
-      return 2;
-    } else if (deviceWidth < 1000) {
-      return 2;
-    } else if (deviceWidth < 1279) {
-      return 4;
-    } else if (deviceWidth > 1279) {
-      return 4;
-    }
-  });
-
-  function handleScreenWidth() {
-    if (deviceWidth < 720) {
-      setCardsNumber(5);
-    } else if (deviceWidth < 920) {
-      setCardsNumber(8);
-    } else if (deviceWidth < 1279 || deviceWidth > 1279) {
-      setCardsNumber(16);
-    }
+  switch (true) {
+    case screenWidth > 319 && screenWidth < 768:
+      maxCardsQuantity = 5;
+      increment = 2;
+      break;
+    case screenWidth > 767 && screenWidth < 1280:
+      maxCardsQuantity = 8;
+      increment = 3;
+      break;
+    case screenWidth > 1279:
+      maxCardsQuantity = 16;
+      increment = 4;
+      break;
+    default:
+      maxCardsQuantity = 5;
   }
 
-  function handleMoviesIncrease() {
-    setCardsNumber(prev => prev + moreCards);
-  }
+  const [cardsLimit, setCardsLimit] = useState(maxCardsQuantity);
 
-  function filterShortMovies(movie) {
-    return movie.filter((item) => item.duration <= 40);
-  }
+  const showMoreCards = () => {
+    setCardsLimit((prev) => prev + increment);
+  };
 
   useEffect(() => {
-    window.addEventListener('resize', handleScreenWidth);
-  }, []);
+    function onResize() {
+      setScreenWidth(window.innerWidth);
+    }
 
-  return(
-    <section className="movies-card-list">
-      {props.isSearching && <Preloader />}
-      <span className={`input__error ${props.isErrorActive && "input__error_visible"}`}>Произошла ошибка во время запроса на сервер</span>
-      <span className={`input__error ${props.notFound && "input__error_visible"}`}>Ничего не найдено</span>
-      <span className={`input__error ${(props.saved && props.movies.length === 0) && "input__error_visible"}`}>Ничего не добавлено в избранное</span>
+    window.addEventListener("resize", onResize);
 
-      <div className="movies-card-list__movies-wrapper">
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  });
 
-        {props.movies &&
-          (props.isShortMovieChecked ? filterShortMovies(props.movies) : props.movies)
-            .slice(0, cardsNumber)
-            .map((movie) => {
-              return(
-                <MovieCard
-                  movie={movie}
-                  key={props.saved ? movie.movieId : movie.id}
-                  saved={props.saved}
-                  onMovieSave={props.onMovieSave}
-                  onDeleteMovie={props.onDeleteMovie}
-                  savedMovies={props.savedMovies}
-                />
-              );
-            })}
-
-      </div>
-      {
-        props.isBookmarkPage ?
-          (
-            <div className="saved-movies__footer-gap" />
+  return (
+    <>
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <section className="elements">
+          {isLoadingSuccess ? (
+            <>
+              {movies.length > 0 ? (
+                <>
+                  <div className="elements__container">
+                    {movies
+                      .map((el, index) => (
+                        <MoviesCard
+                          key={index}
+                          movie={el}
+                          onSave={onSave}
+                          onDelete={onDelete}
+                        />
+                      ))
+                      .slice(0, cardsLimit)}
+                  </div>
+                  {cardsLimit <= movies.length && (
+                    <div className="elements__pagination">
+                      <button
+                        onClick={showMoreCards}
+                        className="elements__button"
+                      >
+                        Ещё
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  {isSearchActive && (
+                    <p className="elements__caption">
+                      По Вашему запросу ничего не найдено.
+                    </p>
+                  )}
+                </>
+              )}
+            </>
           ) : (
-            props.movies.length > cardsNumber &&
-            <button
-              className="movies-card-list__lazy-load-button"
-              onClick={handleMoviesIncrease}
-            >
-              Ещё
-            </button>
-          )
-      }
-    </section>
+            <p className="elements__caption elements__caption_error">
+              Во время запроса произошла ошибка. Возможно, проблема с
+              соединением или сервер недоступен. Подождите немного и попробуйте
+              ещё раз.
+            </p>
+          )}
+        </section>
+      )}
+    </>
   );
 }
 

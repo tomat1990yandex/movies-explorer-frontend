@@ -6,6 +6,13 @@ class MainApi {
     this._headers = config.headers;
   }
 
+  setToken(token) {
+    this._headers = {
+      ...this._headers,
+      Authorization: `Bearer ${token}`,
+    }
+  }
+
   _handlePromise(res) {
     if (res.ok) {
       return res.json();
@@ -24,7 +31,6 @@ class MainApi {
     const { email, name } = data;
 
     return fetch(`${this._baseUrl}/users/me`, {
-      method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
         email: email,

@@ -12,7 +12,6 @@ function Login({ onSubmit, isLoading, errorMessage }) {
       linkPath="/signup"
       linkText="Регистрация"
       onSubmit={onSubmit}
-      isLoading={isLoading}
       submitErrorMessage={errorMessage}
     />
   );

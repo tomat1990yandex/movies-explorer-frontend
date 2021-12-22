@@ -28,12 +28,12 @@ function Navigation({ isOpen, onClose }) {
       </div>
 
       <Link to="/profile" className="popup__button" onClick={onClose}>
+        <p className="popup__caption">Аккаунт</p>
         <img
           src={profileIcon}
           alt="Иконка личного кабинета"
           className="popup__profile-icon"
         />
-        <p className="popup__caption">Аккаунт</p>
       </Link>
     </section>
   );

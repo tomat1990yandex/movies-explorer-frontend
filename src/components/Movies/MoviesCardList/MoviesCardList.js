@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 
 import "./MoviesCardList.css";
 
@@ -21,11 +21,11 @@ function MoviesCardList({
   switch (true) {
     case screenWidth > 319 && screenWidth < 768:
       maxCardsQuantity = 5;
-      increment = 2;
+      increment = 1;
       break;
     case screenWidth > 767 && screenWidth < 1280:
       maxCardsQuantity = 8;
-      increment = 3;
+      increment = 2;
       break;
     case screenWidth > 1279:
       maxCardsQuantity = 16;

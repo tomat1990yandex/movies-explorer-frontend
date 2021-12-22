@@ -32,21 +32,29 @@
 
 .entry__input {
   width: 100%;
-  border: none;
+  border: 1px solid #e8e8e8;
   outline: none;
-  border-bottom: 1px solid #e8e8e8;
   font-weight: 500;
   color: #000000;
   box-sizing: border-box;
+  border-radius: 8px;
+  background-color: #F9F9F9;
+  margin-bottom: -10px;
+  height: 46px;
+  font-size: 13px;
+  line-height: 16px;
+  padding: 15px;
 }
 
 .entry__input:focus:invalid {
-  border-bottom: 1px solid #ff6838;
+  border-bottom: 1px solid #2BE080;
 }
 
 .entry__label {
   font-weight: normal;
   color: #a0a0a0;
+  font-size: 10px;
+  line-height: 12px;
 }
 
 .entry__button-area {
@@ -54,7 +62,7 @@
 }
 
 .entry__button {
-  background: #ff6838;
+  background: #2BE080;
   border-radius: 3px;
   border: none;
   outline: none;
@@ -89,7 +97,7 @@
 
 .entry__link {
   font-weight: normal;
-  color: #ff6838;
+  color: #2BE080;
   margin: 0;
   text-decoration: none;
   opacity: 1;
@@ -142,23 +150,16 @@
     margin-bottom: 80px;
   }
 
-  .entry__input {
-    height: 32px;
-    font-size: 14px;
-    line-height: 17px;
-    padding: 5px 0 10px;
+  .entry__label {
+    margin-bottom: 10px;
   }
 
-  .entry__label {
+  .entry__label:last-of-type {
     margin-top: 24px;
   }
 
-  .entry__label:first-of-type {
-    margin-top: 0;
-  }
-
   .entry__button-area {
-    margin-top: 222px;
+    margin-top: 271px;
   }
 
   .entry__button {
@@ -201,15 +202,15 @@
   }
 
   .entry__label {
-    margin-top: 35px;
+    margin: 35px 0 10px;
   }
 
-  .entry__label:first-of-type {
-    margin-top: 0;
+  .entry__label:last-of-type {
+    margin-top: 25px;
   }
 
   .entry__button-area {
-    margin-top: 134px;
+    margin-top: 181px;
   }
 
   .entry__button {
@@ -246,5 +247,10 @@
   .entry__label {
     font-size: 10px;
     line-height: 12px;
+    padding-bottom: 10px;
+  }
+
+  .entry__button-area {
+    margin-top: 183px;
   }
 }

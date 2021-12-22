@@ -1,22 +1,9 @@
-const BASE_URL = process.env.NODE_ENV === "production"
-  ? "https://api.diminenn-me.students.nomoredomains.rocks"
-  : "https://api.diminenn-me.students.nomoredomains.rocks";
-  // : "http://localhost:3000";
-
-
-// import { mainApiOptions } from "./utils";
+import { mainApiOptions } from "./utils";
 
 class MainApi {
   constructor(config) {
     this._baseUrl = config.url;
     this._headers = config.headers;
-  }
-
-  setToken(token) {
-    this._headers = {
-      ...this._headers,
-      Authorization: `Bearer ${token}`,
-    }
   }
 
   _handlePromise(res) {
@@ -27,13 +14,10 @@ class MainApi {
     return Promise.reject(new Error(`Ошибка ${res.status}`));
   }
 
-  getUserInfo(token) {
+  getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type':'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
+      headers: this._headers,
+      credentials: "include",
     }).then((res) => this._handlePromise(res));
   }
 
@@ -43,6 +27,7 @@ class MainApi {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
+      credentials: "include",
       body: JSON.stringify({
         email: email,
         name: name,
@@ -53,6 +38,7 @@ class MainApi {
   getMovies() {
     return fetch(`${this._baseUrl}/movies`, {
       headers: this._headers,
+      credentials: "include",
     }).then((res) => this._handlePromise(res));
   }
 
@@ -74,15 +60,15 @@ class MainApi {
       country === null
         ? "Неизвестно"
         : country.length > 30
-        ? country.slice(0, 30)
-        : country;
+          ? country.slice(0, 30)
+          : country;
 
     const finalDirector =
       director === null
         ? "Неизвестно"
         : director.length > 30
-        ? director.slice(0, 30)
-        : director;
+          ? director.slice(0, 30)
+          : director;
 
     const imageUrl = `https://api.nomoreparties.co${image.url}`;
     const thumbnail = `https://api.nomoreparties.co${image.formats.thumbnail.url}`;
@@ -90,6 +76,7 @@ class MainApi {
     return fetch(`${this._baseUrl}/movies`, {
       method: "POST",
       headers: this._headers,
+      credentials: "include",
       body: JSON.stringify({
         country: finalCountry,
         director: finalDirector,
@@ -110,6 +97,7 @@ class MainApi {
     return fetch(`${this._baseUrl}/movies/${id}`, {
       method: "DELETE",
       headers: this._headers,
+      credentials: "include",
     }).then((res) => this._handlePromise(res));
   }
 
@@ -119,6 +107,7 @@ class MainApi {
     return fetch(`${this._baseUrl}/signup`, {
       method: "POST",
       headers: this._headers,
+      credentials: "include",
       body: JSON.stringify({
         email: email,
         password: password,
@@ -133,6 +122,7 @@ class MainApi {
     return fetch(`${this._baseUrl}/signin`, {
       method: "POST",
       headers: this._headers,
+      credentials: "include",
       body: JSON.stringify({
         email: email,
         password: password,
@@ -144,17 +134,11 @@ class MainApi {
     return fetch(`${this._baseUrl}/signout`, {
       method: "POST",
       headers: this._headers,
+      credentials: "include",
     }).then((res) => this._handlePromise(res));
   }
 }
 
-// const mainApi = new MainApi(mainApiOptions);
-
-const mainApi = new MainApi({
-  url: BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  }
-});
+const mainApi = new MainApi(mainApiOptions);
 
 export default mainApi;

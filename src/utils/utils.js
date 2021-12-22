@@ -6,9 +6,8 @@ export const moviesApiOptions = {
 };
 
 export const mainApiOptions = {
-  url: "https://api.diminenn-me.students.nomoredomains.rocks",
+  url: "http://localhost:3000",
   headers: {
     "Content-Type": "application/json",
   },
 };
-// url: "http://localhost:3000",

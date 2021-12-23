@@ -69,7 +69,6 @@ function App() {
         setIsLoading(false);
         history.push("./movies");
         setLoggedIn(true);
-        console.log(loggedIn);
         localStorage.setItem("loggedIn", res.token);
       })
       .catch((err) => {
@@ -83,9 +82,6 @@ function App() {
     localStorage.removeItem('token');
     localStorage.removeItem('savedMovies');
     setLoggedIn(false);
-    console.log(loggedIn);
-    // setSavedMovies([]);
-    // setAllMovies([]);
     history.push('/');
   }
 

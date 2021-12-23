@@ -65,11 +65,11 @@ function App() {
 
     return mainApi
       .login(data)
-      .then(() => {
+      .then((res) => {
         setIsLoading(false);
         history.push("./movies");
         setLoggedIn(true);
-        localStorage.setItem("loggedIn", "User is authorized");
+        localStorage.setItem("loggedIn", res.token);
       })
       .catch((err) => {
         setIsLoading(false);
@@ -144,14 +144,14 @@ function App() {
   }
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem("loggedIn");
+    const token = localStorage.getItem("loggedIn");
 
-    if (!isLoggedIn) {
+    if (!token) {
       history.push("./");
     } else {
       history.push("./movies");
       setIsLoading(true);
-
+      mainApi.setToken(token)
       Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
         .then(([userData, movies]) => {
           setIsLoading(false);

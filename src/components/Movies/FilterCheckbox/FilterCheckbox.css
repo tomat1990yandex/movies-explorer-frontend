@@ -75,5 +75,10 @@
 
 @media all and (min-width: 1280px) {
   .movies__filter {
-    padding: 27px 0 69px;  }
+    padding: 27px 0 69px;
+  }
+
+  .movie__filter-label {
+    font-size: 12px;
+  }
 }

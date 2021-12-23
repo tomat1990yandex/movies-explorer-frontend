@@ -70,7 +70,7 @@ function MoviesCard({ movie, onSave, onDelete }) {
             />
           ) : (
             <div
-              className={isSaved ? "article__icon-block_active" : "article__icon"}
+              className={isSaved ? "" : ""}
             />
           )}
         </div>

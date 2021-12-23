@@ -69,6 +69,7 @@ function App() {
         setIsLoading(false);
         history.push("./movies");
         setLoggedIn(true);
+        console.log(loggedIn);
         localStorage.setItem("loggedIn", res.token);
       })
       .catch((err) => {
@@ -78,20 +79,14 @@ function App() {
   }
 
   function onLogout() {
-    return mainApi
-      .logout()
-      .then(() => {
-        setLoggedIn(false);
-        localStorage.removeItem("loggedIn");
-        localStorage.removeItem("savedMoviesSearch");
-        history.push("./");
-      })
-      .catch((err) => {
-        console.log(
-          "Ошибка при попытке выхода из личного кабинета",
-          err.message
-        );
-      });
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('token');
+    localStorage.removeItem('savedMovies');
+    setLoggedIn(false);
+    console.log(loggedIn);
+    // setSavedMovies([]);
+    // setAllMovies([]);
+    history.push('/');
   }
 
   function handleUpdateUser(data) {
@@ -179,7 +174,7 @@ function App() {
         <Header
           location={location.pathname}
           onMenuClick={openNavigation}
-          onLogoClick={onLogout}
+          // onLogoClick={onLogout}
         />
 
         <Switch>
@@ -229,7 +224,7 @@ function App() {
               errorMessage={loginErrorMessage}
             />
           </Route>
-          <Route path="*">
+          <Route path="/*">
             <UnknownPage />
           </Route>
           <Route>

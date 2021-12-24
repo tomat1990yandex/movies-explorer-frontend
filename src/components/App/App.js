@@ -170,6 +170,7 @@ function App() {
         <Header
           location={location.pathname}
           onMenuClick={openNavigation}
+          loggedIn={loggedIn}
           // onLogoClick={onLogout}
         />
 

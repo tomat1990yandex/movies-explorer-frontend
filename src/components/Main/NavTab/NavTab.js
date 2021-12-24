@@ -8,19 +8,10 @@ import profileIcon from "../../../images/profile-icon.svg";
 import burgerMenu from "../../../images/burger-icon.svg";
 
 
-function NavTab({location, onMenuClick}) {
+function NavTab({location, onMenuClick, loggedIn}) {
   return (
     <>
-      {location === "/" ? (
-        <nav className="header__menu">
-          <Link to="/signup" className="header__link header__link_white">
-            Регистрация
-          </Link>
-          <Link to="/signin" className="header__link header__link_green">
-            Войти
-          </Link>
-        </nav>
-      ) : (
+      {loggedIn ? (
         <>
           <nav className="header__main-menu">
             <div className="header__icon-menu" onClick={onMenuClick}>
@@ -65,6 +56,15 @@ function NavTab({location, onMenuClick}) {
             />
           )}
         </>
+      ) : (
+        <nav className="header__menu">
+          <Link to="/signup" className="header__link header__link_white">
+            Регистрация
+          </Link>
+          <Link to="/signin" className="header__link header__link_green">
+            Войти
+          </Link>
+        </nav>
       )}
     </>
   );

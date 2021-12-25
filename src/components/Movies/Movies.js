@@ -60,7 +60,12 @@ function Movies({ myMovies, onSave, onDelete }) {
           );
 
           setIsLoading(false);
+          localStorage.setItem(
+            "savedMoviesSearch",
+            JSON.stringify(filteredMovies)
+          );
           setIsCheckboxActive(false);
+          console.log("isCheckboxActive");
 
           setMovies(filteredMovies);
           setIsLocalStorageChanged(true);

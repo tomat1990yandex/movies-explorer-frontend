@@ -52,7 +52,10 @@ function App() {
       .register(data)
       .then(() => {
         setIsLoading(false);
-        history.push("./signin");
+        // history.push("./movies");
+        // setLoggedIn(true);
+        localStorage.setItem("loggedIn", data.token);
+        onLogin(data);
       })
       .catch((err) => {
         setIsLoading(false);
@@ -81,6 +84,9 @@ function App() {
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('token');
     localStorage.removeItem('savedMovies');
+    localStorage.removeItem('savedMoviesSearch');
+
+
     setLoggedIn(false);
     history.push('/');
   }
@@ -138,11 +144,11 @@ function App() {
     const token = localStorage.getItem("loggedIn");
 
     if (!token) {
-      history.push("./");
+      // history.push("/");
     } else {
-      history.push("./movies");
       setIsLoading(true);
       mainApi.setToken(token)
+      history.push("./movies");
       Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
         .then(([userData, movies]) => {
           setIsLoading(false);
@@ -171,7 +177,6 @@ function App() {
           location={location.pathname}
           onMenuClick={openNavigation}
           loggedIn={loggedIn}
-          // onLogoClick={onLogout}
         />
 
         <Switch>
@@ -221,7 +226,7 @@ function App() {
               errorMessage={loginErrorMessage}
             />
           </Route>
-          <Route path="/*">
+          <Route path="*">
             <UnknownPage />
           </Route>
           <Route>

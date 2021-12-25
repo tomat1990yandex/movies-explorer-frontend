@@ -11,18 +11,21 @@ import Preloader from "../Movies/Preloader/Preloader";
 import "./Profile.css";
 
 function Profile({ onUpdate, isLoading, onLogout }) {
-  const { values, errors, isValid, handleChange, resetForm } =
+  let { values, errors, isValid, handleChange } =
     useFormAndValidation();
 
   const currentUser = useContext(CurrentUserContext);
 
+  useEffect(() => {
+    values.email = currentUser.email;
+    values.name = currentUser.name;
+  }, [currentUser]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onUpdate({ ...values, email: currentUser.email });
-    resetForm();
+    onUpdate({ email: values.email, name: values.name });
+    // resetForm();
   };
-
-  useEffect(() => {}, [currentUser]);
 
   return (
     <section className="profile">
@@ -37,33 +40,41 @@ function Profile({ onUpdate, isLoading, onLogout }) {
               <input
                 name="name"
                 type="text"
-                placeholder={currentUser.name}
-                value={values.name || ""}
+                value={values.name || currentUser.name || "" }
                 minLength="2"
                 maxLength="30"
                 pattern="[a-zA-Zа-яА-Я\sёЁ-]{2,30}"
                 required
                 onChange={handleChange}
                 className="profile__input"
+                autoComplete='off'
               />
             </div>
             <span className="profile__input-error">{errors.name}</span>
             <div className="profile__input-area">
               <label className="profile__label">E-mail</label>
               <input
-                name="userEmail"
+                name="email"
                 type="email"
-                readOnly
-                placeholder={currentUser.email}
-                value={values.email || ""}
+                value={values.email || currentUser.email || "" }
+                pattern="[A-z0-9_.-]{1,}@[A-z0-9_.-]{1,}[.][A-z]{2,8}"
+                required
+                onChange={handleChange}
                 className="profile__input"
-                disabled={true}
+                autoComplete='off'
               />
+              {/*<span className="profile__message">{errorMessage}</span>*/}
             </div>
+            <span className="profile__input-error">{errors.email}</span>
             <button
-              disabled={isValid === false && true}
               type="submit"
-              className="profile__button"
+              className={`profile__button ${
+                (!isValid ||
+                  (values.email === currentUser.email &&
+                    values.name === currentUser.name)) &&
+                'profile__button_disabled'
+              }`}
+              onClick={handleSubmit}
             >
               Редактировать
             </button>

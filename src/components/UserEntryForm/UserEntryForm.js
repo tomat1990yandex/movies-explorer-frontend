@@ -19,6 +19,7 @@ function UserEntryForm({
   onSubmit,
   isLoading,
   submitErrorMessage,
+  onLogoClick,
 }) {
   const { values, errors, isValid, handleChange, resetForm } =
     useFormAndValidation();
@@ -46,7 +47,9 @@ function UserEntryForm({
   return (
     <section className="section entry">
       <div className="entry__container">
+        <Link to="/" onClick={onLogoClick}>
         <img src={logo} alt="Логотип проекта" className="entry__logo" />
+        </Link>
         <form noValidate onSubmit={handleSubmit} className="entry__form">
           <h2 className="entry__title">{title}</h2>
           {isLoading ? (
@@ -63,7 +66,7 @@ function UserEntryForm({
                     type="text"
                     minLength="2"
                     maxLength="30"
-                    pattern="[a-zA-Zа-яА-Я\sёЁ-]{2,30}"
+                    pattern="[a-zA-Zа-яА-Я0-9\sёЁ-]{2,30}"
                     value={values.name || ""}
                     onChange={handleChange}
                     className="entry__input"
@@ -78,6 +81,7 @@ function UserEntryForm({
               <input
                 name="email"
                 type="email"
+                pattern="[A-z0-9_.-]{1,}@[A-z0-9_.-]{1,}[.][A-z]{2,8}"
                 value={values.email || ""}
                 onChange={handleChange}
                 className="entry__input"

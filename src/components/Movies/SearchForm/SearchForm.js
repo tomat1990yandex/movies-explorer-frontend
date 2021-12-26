@@ -5,29 +5,31 @@ import "./SearchForm.css";
 import useFormAndValidation from "../../../utils/useFormAndValidation";
 import find from "../../../images/find-button.svg";
 
-function SearchForm({onSearchClick}) {
+function SearchForm({onSearchClick, searchMovieInput}) {
   const {
     values,
     errors,
     isValid,
     handleChange,
     handleCustomizedError,
-    resetForm,
   } = useFormAndValidation();
 
   const movieSearchInputName = "movieSearch";
   const movieSearchMessage = "Нужно ввести ключевое слово";
-
   function handleSubmit(e) {
     e.preventDefault();
-
+    console.log(values.movieSearch, "values.movieSearch");
+    console.log(searchMovieInput, "values.searchMovieInput");
     if (!values[movieSearchInputName]) {
       handleCustomizedError(movieSearchInputName, movieSearchMessage);
     } else {
       onSearchClick(values[movieSearchInputName]);
-      resetForm();
     }
   }
+
+  // const movieSearchInputLast = JSON.parse(localStorage.getItem("searchMovieInput"));;
+  // //
+  // console.log(movieSearchInputLast, "testsearcher")
 
   return (
     <form
@@ -43,7 +45,7 @@ function SearchForm({onSearchClick}) {
         className={`movie__search-input ${
           errors.movieSearch && "movie__search-input_error"
         }`}
-        // value={values.movieSearch || ""}
+        value={values.movieSearch || ""}
         onChange={handleChange}
         autoComplete="off"
       />

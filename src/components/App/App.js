@@ -25,7 +25,7 @@ function App() {
   const location = useLocation();
   const history = useHistory();
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
-
+  const [isComplitedUpdate, setComplitedUpdate] = useState(false);
   const [registerErrorMessage, setRegisterErrorMessage] = useState("");
   const [loginErrorMessage, setLoginErrorMessage] = useState("");
 
@@ -52,8 +52,6 @@ function App() {
       .register(data)
       .then(() => {
         setIsLoading(false);
-        // history.push("./movies");
-        // setLoggedIn(true);
         localStorage.setItem("loggedIn", data.token);
         onLogin(data);
       })
@@ -83,10 +81,10 @@ function App() {
   function onLogout() {
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('token');
+    localStorage.removeItem('movies');
     localStorage.removeItem('savedMovies');
     localStorage.removeItem('savedMoviesSearch');
-
-
+    localStorage.removeItem('searchMovieInput');
     setLoggedIn(false);
     history.push('/');
   }
@@ -99,6 +97,10 @@ function App() {
       .then((user) => {
         setIsLoading(false);
         setCurrentUser(user);
+        setComplitedUpdate(true);
+        console.log(
+          "Данные пользователя успешно обновлены!",
+        );
       })
       .catch((err) => {
         setIsLoading(false);
@@ -109,6 +111,10 @@ function App() {
         );
       });
   }
+
+  useEffect(() => {
+    setComplitedUpdate(false);
+  }, [location]);
 
   function handleSaveMovie(movieName) {
     const storageFilms = JSON.parse(localStorage.getItem("savedMoviesSearch"));
@@ -144,11 +150,9 @@ function App() {
     const token = localStorage.getItem("loggedIn");
 
     if (!token) {
-      // history.push("/");
     } else {
       setIsLoading(true);
       mainApi.setToken(token)
-      // history.push("./movies");
       Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
         .then(([userData, movies]) => {
           setIsLoading(false);
@@ -209,6 +213,7 @@ function App() {
             loggedIn={loggedIn}
             component={Profile}
             onUpdate={handleUpdateUser}
+            isComplitedUpdate={isComplitedUpdate}
             isLoading={isLoading}
             onLogout={onLogout}
           />
@@ -230,7 +235,7 @@ function App() {
             <UnknownPage />
           </Route>
           <Route>
-            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
+            {!loggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
           </Route>
         </Switch>
 

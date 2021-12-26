@@ -10,7 +10,7 @@ import Preloader from "../Movies/Preloader/Preloader";
 
 import "./Profile.css";
 
-function Profile({ onUpdate, isLoading, onLogout }) {
+function Profile({ onUpdate, isLoading, onLogout, isComplitedUpdate }) {
   let { values, errors, isValid, handleChange } =
     useFormAndValidation();
 
@@ -24,6 +24,7 @@ function Profile({ onUpdate, isLoading, onLogout }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     onUpdate({ email: values.email, name: values.name });
+
     // resetForm();
   };
 
@@ -63,8 +64,10 @@ function Profile({ onUpdate, isLoading, onLogout }) {
                 className="profile__input"
                 autoComplete='off'
               />
-              {/*<span className="profile__message">{errorMessage}</span>*/}
             </div>
+            {isComplitedUpdate ? (
+            <span className="profile__input-error">Данные пользователя успешно обновлены!</span>
+            ) : null}
             <span className="profile__input-error">{errors.email}</span>
             <button
               type="submit"

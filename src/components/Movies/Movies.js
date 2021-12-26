@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import {React, useEffect, useState} from "react";
 
 import "./Movies.css";
 
@@ -12,14 +12,14 @@ import SearchForm from "./SearchForm/SearchForm";
 import FilterCheckbox from "./FilterCheckbox/FilterCheckbox";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 
-function Movies({ myMovies, onSave, onDelete }) {
+function Movies({myMovies, onSave, onDelete}) {
   const [searchMovieInput, setSearchMovieInput] = useState("");
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingSuccess, setIsLoadingSuccess] = useState(true);
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [isCheckboxActive, setIsCheckboxActive] = useState(false);
-  // const [isLocalStorageChanged, setIsLocalStorageChanged] = useState(false);
+  const [isLocalStorageChanged, setIsLocalStorageChanged] = useState(false);
 
   function getSearchMovieInput(input) {
     setSearchMovieInput(input.toLowerCase());
@@ -35,16 +35,14 @@ function Movies({ myMovies, onSave, onDelete }) {
 
     if (storageFilms) {
       const finalMovies = checkIsMovieSaved(storageFilms, myMovies);
-      // console.log(storageFilms);
-      // console.log(isCheckboxActive);
-      // console.log(myMovies);
       setMovies(finalMovies);
-      setIsCheckboxActive(false);
-
+      const checkbox = JSON.parse(localStorage.getItem("isCheckboxActive"));
+      setIsCheckboxActive(checkbox);
       localStorage.setItem("savedMoviesSearch", JSON.stringify(finalMovies));
-      // setIsLocalStorageChanged(true);
+      // setSearchMovieInput( JSON.parse(localStorage.getItem("searchMovieInput")));
+      setIsLocalStorageChanged(false);
     }
-  }, [myMovies, ]);
+  }, [myMovies, isLocalStorageChanged]);
 
   useEffect(() => {
     if (searchMovieInput === "") {
@@ -56,27 +54,20 @@ function Movies({ myMovies, onSave, onDelete }) {
         .getBeatfilmMovies()
         .then((res) => {
           const filteredMovies = filterMovies(res, searchMovieInput);
-          // console.log(res);
-          console.log(searchMovieInput);
 
           localStorage.setItem(
             "searchMovieInput",
             JSON.stringify(searchMovieInput)
           );
 
-          // localStorage.setItem(
-          //   "savedMoviesSearch",
-          //   JSON.stringify(filteredMovies)
-          // );
+          localStorage.setItem(
+            "savedMoviesSearch",
+            JSON.stringify(filteredMovies)
+          );
 
           setIsLoading(false);
-          // setIsCheckboxActive(false);
-          // console.log(isCheckboxActive);
-
           setMovies(filteredMovies);
-          // setIsLocalStorageChanged(true);
-          // console.log(filteredMovies);
-
+          setIsLocalStorageChanged(true);
         })
         .catch((err) => {
           console.log(err);
@@ -87,12 +78,11 @@ function Movies({ myMovies, onSave, onDelete }) {
 
   useEffect(() => {
     const storageFilms = JSON.parse(localStorage.getItem("savedMoviesSearch"));
-    // console.log(storageFilms);
-    // console.log(isCheckboxActive);
-    // console.log(searchMovieInput);
 
+    // setSearchMovieInput( JSON.parse(localStorage.getItem("searchMovieInput")));
     const filteredShortMovies = storageFilms && filterShortMovies(storageFilms);
-
+    localStorage.setItem("isCheckboxActive", JSON.stringify(isCheckboxActive));
+    console.log(isCheckboxActive, "chekbox");
     const finalMovies =
       isCheckboxActive === true ? filteredShortMovies : storageFilms;
 
@@ -101,15 +91,13 @@ function Movies({ myMovies, onSave, onDelete }) {
     }
   }, [isCheckboxActive]);
 
-  // useEffect( () => {
-  //
-  // }, [])
-  console.log(isCheckboxActive);
-
   return (
     <section className="movies">
       <div className="movies__container">
-        <SearchForm onSearchClick={getSearchMovieInput} />
+        <SearchForm
+          onSearchClick={getSearchMovieInput}
+          searchMovieInput={searchMovieInput}
+        />
         <FilterCheckbox
           isChecked={isCheckboxActive}
           onClick={handleCheckboxClick}

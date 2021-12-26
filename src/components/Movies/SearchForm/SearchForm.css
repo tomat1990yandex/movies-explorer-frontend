@@ -82,18 +82,13 @@
   .movie__search-input {
     padding: 6px 6px 6px 22px;
     font-size: 14px;
-    width: 654px;
+    width: 637px;
 
   }
 
   .movie__search-span {
     margin-left: 22px;
   }
-
-  .movie__search-button {
-    top: 2px;
-  }
-
 }
 
 @media all and (min-width: 1280px) {

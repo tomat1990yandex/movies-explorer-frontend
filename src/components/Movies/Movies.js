@@ -19,7 +19,7 @@ function Movies({ myMovies, onSave, onDelete }) {
   const [isLoadingSuccess, setIsLoadingSuccess] = useState(true);
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [isCheckboxActive, setIsCheckboxActive] = useState(false);
-  const [isLocalStorageChanged, setIsLocalStorageChanged] = useState(false);
+  // const [isLocalStorageChanged, setIsLocalStorageChanged] = useState(false);
 
   function getSearchMovieInput(input) {
     setSearchMovieInput(input.toLowerCase());
@@ -35,13 +35,16 @@ function Movies({ myMovies, onSave, onDelete }) {
 
     if (storageFilms) {
       const finalMovies = checkIsMovieSaved(storageFilms, myMovies);
+      // console.log(storageFilms);
+      // console.log(isCheckboxActive);
+      // console.log(myMovies);
       setMovies(finalMovies);
       setIsCheckboxActive(false);
 
       localStorage.setItem("savedMoviesSearch", JSON.stringify(finalMovies));
-      setIsLocalStorageChanged(false);
+      // setIsLocalStorageChanged(true);
     }
-  }, [myMovies, isLocalStorageChanged]);
+  }, [myMovies, ]);
 
   useEffect(() => {
     if (searchMovieInput === "") {
@@ -53,22 +56,27 @@ function Movies({ myMovies, onSave, onDelete }) {
         .getBeatfilmMovies()
         .then((res) => {
           const filteredMovies = filterMovies(res, searchMovieInput);
+          // console.log(res);
+          console.log(searchMovieInput);
 
           localStorage.setItem(
-            "savedMoviesSearch",
-            JSON.stringify(filteredMovies)
+            "searchMovieInput",
+            JSON.stringify(searchMovieInput)
           );
+
+          // localStorage.setItem(
+          //   "savedMoviesSearch",
+          //   JSON.stringify(filteredMovies)
+          // );
 
           setIsLoading(false);
-          localStorage.setItem(
-            "savedMoviesSearch",
-            JSON.stringify(filteredMovies)
-          );
-          setIsCheckboxActive(false);
-          console.log("isCheckboxActive");
+          // setIsCheckboxActive(false);
+          // console.log(isCheckboxActive);
 
           setMovies(filteredMovies);
-          setIsLocalStorageChanged(true);
+          // setIsLocalStorageChanged(true);
+          // console.log(filteredMovies);
+
         })
         .catch((err) => {
           console.log(err);
@@ -79,6 +87,10 @@ function Movies({ myMovies, onSave, onDelete }) {
 
   useEffect(() => {
     const storageFilms = JSON.parse(localStorage.getItem("savedMoviesSearch"));
+    // console.log(storageFilms);
+    // console.log(isCheckboxActive);
+    // console.log(searchMovieInput);
+
     const filteredShortMovies = storageFilms && filterShortMovies(storageFilms);
 
     const finalMovies =
@@ -88,6 +100,11 @@ function Movies({ myMovies, onSave, onDelete }) {
       setMovies(finalMovies);
     }
   }, [isCheckboxActive]);
+
+  // useEffect( () => {
+  //
+  // }, [])
+  console.log(isCheckboxActive);
 
   return (
     <section className="movies">

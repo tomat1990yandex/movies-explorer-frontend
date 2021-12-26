@@ -70,8 +70,8 @@ function App() {
       .login(data)
       .then((res) => {
         setIsLoading(false);
-        history.push("./movies");
         setLoggedIn(true);
+        history.push("./movies");
         localStorage.setItem("loggedIn", res.token);
       })
       .catch((err) => {
@@ -148,7 +148,7 @@ function App() {
     } else {
       setIsLoading(true);
       mainApi.setToken(token)
-      history.push("./movies");
+      // history.push("./movies");
       Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
         .then(([userData, movies]) => {
           setIsLoading(false);

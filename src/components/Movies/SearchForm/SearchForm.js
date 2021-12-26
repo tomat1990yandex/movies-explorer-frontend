@@ -43,8 +43,9 @@ function SearchForm({onSearchClick}) {
         className={`movie__search-input ${
           errors.movieSearch && "movie__search-input_error"
         }`}
-        value={values.movieSearch || ""}
+        // value={values.movieSearch || ""}
         onChange={handleChange}
+        autoComplete="off"
       />
       <button type="submit" className="movie__search-button">
         <img src={find} alt="кнопка поиска" className="movie__search-button_find" />

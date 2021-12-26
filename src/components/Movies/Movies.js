@@ -82,7 +82,7 @@ function Movies({myMovies, onSave, onDelete}) {
     // setSearchMovieInput( JSON.parse(localStorage.getItem("searchMovieInput")));
     const filteredShortMovies = storageFilms && filterShortMovies(storageFilms);
     localStorage.setItem("isCheckboxActive", JSON.stringify(isCheckboxActive));
-    console.log(isCheckboxActive, "chekbox");
+    // console.log(isCheckboxActive, "chekbox");
     const finalMovies =
       isCheckboxActive === true ? filteredShortMovies : storageFilms;
 

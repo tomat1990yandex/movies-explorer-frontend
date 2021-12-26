@@ -12,6 +12,7 @@ function Register({ onSubmit, isLoading, errorMessage }) {
       linkPath="/signin"
       linkText="Войти"
       onSubmit={onSubmit}
+      isLoading={isLoading}
       submitErrorMessage={errorMessage}
     />
   );

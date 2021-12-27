@@ -39,7 +39,6 @@ function Movies({myMovies, onSave, onDelete}) {
       const checkbox = JSON.parse(localStorage.getItem("isCheckboxActive"));
       setIsCheckboxActive(checkbox);
       localStorage.setItem("savedMoviesSearch", JSON.stringify(finalMovies));
-      // setSearchMovieInput( JSON.parse(localStorage.getItem("searchMovieInput")));
       setIsLocalStorageChanged(false);
     }
   }, [myMovies, isLocalStorageChanged]);
@@ -78,11 +77,9 @@ function Movies({myMovies, onSave, onDelete}) {
 
   useEffect(() => {
     const storageFilms = JSON.parse(localStorage.getItem("savedMoviesSearch"));
-
-    // setSearchMovieInput( JSON.parse(localStorage.getItem("searchMovieInput")));
     const filteredShortMovies = storageFilms && filterShortMovies(storageFilms);
+
     localStorage.setItem("isCheckboxActive", JSON.stringify(isCheckboxActive));
-    // console.log(isCheckboxActive, "chekbox");
     const finalMovies =
       isCheckboxActive === true ? filteredShortMovies : storageFilms;
 

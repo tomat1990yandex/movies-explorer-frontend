@@ -24,8 +24,6 @@ function Profile({ onUpdate, isLoading, onLogout, isComplitedUpdate }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     onUpdate({ email: values.email, name: values.name });
-
-    // resetForm();
   };
 
   return (

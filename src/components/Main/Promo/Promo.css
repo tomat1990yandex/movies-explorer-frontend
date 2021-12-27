@@ -1,58 +1,83 @@
 .promo {
-  display: flex;
-  justify-content: center;
-  margin: 0;
-  padding: 0 14px;
   background-color: #5C5C5C;
-  min-height: 524px;
+}
+
+.promo__container {
   min-width: 320px;
+  max-width: 1280px;
   box-sizing: border-box;
-  background-image: url('/src/images/promo-logo.svg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 320px;
-  background-position-y: 82px;
+  margin: 0 auto;
+  position: relative;
 }
 
 .promo__title {
-  margin: 0;
-  /*align-self: center;*/
-  font-weight: 400;
-  font-size: 31px;
-  line-height: 39px;
-  text-align: center;
+  font-weight: normal;
   letter-spacing: -0.04em;
+  color: #ffffff;
+  margin: 0;
 }
-@media screen and (min-width: 300px) and (max-width: 565px) {
-  .promo {
-    min-height: 570px;
-    padding: 0;
-    background-size: 248px;
-    background-position-y: 142px;
+
+.promo__logo {
+  position: absolute;
+}
+
+@media all and (min-width: 320px) {
+  .promo__container {
+    height: 570px;
+    padding: 207px 10px 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
   }
 
   .promo__title {
-    padding: 207px 0;
+    font-size: 31px;
+    line-height: 39px;
+    width: 300px;
+    text-align: center;
+    letter-spacing: -0.04em;
+  }
+
+  .promo__logo {
+    width: 248px;
+    height: 248px;
+    bottom: 180px;
+    right: 36px;
   }
 }
 
-@media screen and (min-width: 566px) and (max-width: 1070px) {
+@media all and (min-width: 768px) {
+  .promo__container {
+    height: 784px;
+    padding: 326px 18px 70px;
+  }
+
   .promo__title {
     font-size: 50px;
     line-height: 58px;
-    padding: 326px 0;
+    width: 730px;
   }
 
-  .promo {
-    min-height: 784px;
-    background-position-y: 224px;
+  .promo__logo {
+    width: 320px;
+    height: 320px;
+    bottom: 240px;
+    right: 224px;
   }
 }
 
-@media screen and (min-width: 1080px) {
+@media all and (min-width: 1280px) {
+  .promo__container {
+    height: 524px;
+    padding: 185px 275px;
+  }
+
   .promo__title {
-    padding: 184px 200px;
-    font-size: 50px;
-    line-height: 58px;
+    width: 730px;
+    text-align: center;
+  }
+
+  .promo__logo {
+    right: 480px;
+    bottom: 122px;
   }
 }

@@ -1,29 +1,38 @@
-import React from 'react';
+import React from "react";
 
-import './AboutProject.css';
-import PortfolioTitle from "../../PortfolioTitle/PortfolioTitle";
+import "./AboutProject.css";
 
 function AboutProject() {
-  return(
-    <section className="about-project" id="about-project">
-      <PortfolioTitle title="О проекте" />
-      <ul className="about-project__content">
-        <li className="about-project__content-item">
-          <h3 className="about-project__subtitle">Дипломный проект включал 5 этапов</h3>
-          <p className="about-project__item-text">Составление плана, работу над бэкендом, вёрстку,
-            добавление функциональности и финальные доработки.</p>
-        </li>
-        <li className="about-project__content-item">
-          <h3 className="about-project__subtitle">На выполнение диплома ушло 5 недель</h3>
-          <p className="about-project__item-text">У каждого этапа был мягкий и жёсткий дедлайн, которые нужно
-            было соблюдать, чтобы успешно защититься.</p>
-        </li>
-      </ul>
-      <div className="progress-bar">
-        <div className="progress-bar__element progress-bar__element_color_green">1 неделя</div>
-        <div className="progress-bar__element progress-bar__element_color_grey">4 недели</div>
-        <p className="progress-bar__element-description">Back-end</p>
-        <p className="progress-bar__element-description">Front-end</p>
+  return (
+    <section className="section info">
+      <div className="info__container">
+        <div className="section__header">О проекте</div>
+        <div className="info__content">
+          <div className="info__item">
+            <h2 className="info__title">Дипломный проект включал 5 этапов</h2>
+            <p className="info__paragraph">
+              Составление плана, работу над бэкендом, вёрстку, добавление
+              функциональности и финальные доработки.
+            </p>
+          </div>
+          <div className="info__item">
+            <h2 className="info__title">На выполнение диплома ушло 5 недель</h2>
+            <p className="info__paragraph">
+              У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было
+              соблюдать, чтобы успешно защититься.
+            </p>
+          </div>
+        </div>
+        <div className="info__timetable">
+          <div className="info__scale">
+            <div className="info__step info__step_first">1 неделя</div>
+            <div className="info__step info__step_second">4 недели</div>
+          </div>
+          <div className="info__comments">
+            <p className="info__comment">Back-end</p>
+            <p className="info__comment">Front-end</p>
+          </div>
+        </div>
       </div>
     </section>
   );

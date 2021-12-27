@@ -42,7 +42,7 @@ h1 {
   margin: 0.67em 0;
 }
 
-/* Grouping profile
+/* Grouping content
    ========================================================================== */
 
 /**
@@ -138,7 +138,7 @@ sup {
   top: -0.5em;
 }
 
-/* Embedded profile
+/* Embedded content
    ========================================================================== */
 
 /**
@@ -174,7 +174,8 @@ textarea {
  */
 
 button,
-input { /* 1 */
+input {
+  /* 1 */
   overflow: visible;
 }
 
@@ -184,7 +185,8 @@ input { /* 1 */
  */
 
 button,
-select { /* 1 */
+select {
+  /* 1 */
   text-transform: none;
 }
 

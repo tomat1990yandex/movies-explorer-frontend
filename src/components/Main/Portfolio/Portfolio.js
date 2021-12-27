@@ -1,29 +1,86 @@
-import React from 'react';
+import React from "react";
 
-import './Portfolio.css';
-import arrow from '../../../images/portfolio-arrow.svg';
+import "./Portfolio.css";
+
+import AboutMe from "../AboutMe/AboutMe";
+
+import arrow from "../../../images/landing-arrow.svg";
 
 function Portfolio() {
-  return(
-    <section className="portfolio about-project">
-      <h2 className="portfolio__title">Портфолио</h2>
-      <ul className="portfolio__list">
-        <li className="portfolio__list-item">
-          <a href="https://tomat1990yandex.github.io/how-to-learn/" className="portfolio__list-link"
-             target="_blank" rel="noreferrer" >Статичный сайт</a>
-          <img src={arrow} alt="Стрелка, указывающая в правый верхний угол" className="portfolio__list-link-image"/>
-        </li>
-        <li className="portfolio__list-item">
-          <a href="https://tomat1990yandex.github.io/russian-travel/" className="portfolio__list-link"
-             target="_blank" rel="noreferrer" >Адаптивный сайт</a>
-          <img src={arrow} alt="Стрелка, указывающая в правый верхний угол" className="portfolio__list-link-image"/>
-        </li>
-        <li className="portfolio__list-item">
-          <a href="https://tomat1990yandex.github.io/mesto/" className="portfolio__list-link"
-             target="_blank" rel="noreferrer" >Одностраничное приложение</a>
-          <img src={arrow} alt="Стрелка, указывающая в правый верхний угол" className="portfolio__list-link-image"/>
-        </li>
-      </ul>
+  return (
+    <section className="section portfolio">
+      <div className="portfolio__container">
+        <div className="section__header">Студент</div>
+        <AboutMe />
+        <div className="portfolio__projects">
+          <p className="portfolio__text">Портфолио</p>
+          <div className="portfolio__links">
+            <div className="portfolio__link">
+              <a
+                target="_blank"
+                href="https://tomat1990yandex.github.io/how-to-learn/"
+                rel="noreferrer"
+                className="portfolio__project"
+              >
+                Статичный сайт
+              </a>
+              <a
+                target="_blank"
+                href="https://tomat1990yandex.github.io/how-to-learn/"
+                rel="noreferrer"
+              >
+                <img
+                  src={arrow}
+                  className="portfolio__icon"
+                  alt="Иконка для ссылки на проект"
+                />
+              </a>
+            </div>
+            <div className="portfolio__link">
+              <a
+                target="_blank"
+                href="https://tomat1990yandex.github.io/russian-travel/"
+                rel="noreferrer"
+                className="portfolio__project"
+              >
+                Адаптивный сайт
+              </a>
+              <a
+                target="_blank"
+                href="https://tomat1990yandex.github.io/russian-travel/"
+                rel="noreferrer"
+              >
+                <img
+                  src={arrow}
+                  className="portfolio__icon"
+                  alt="Иконка для ссылки на проект"
+                />
+              </a>
+            </div>
+            <div className="portfolio__link">
+              <a
+                target="_blank"
+                href="https://tomat1990yandex.github.io/mesto/"
+                rel="noreferrer"
+                className="portfolio__project"
+              >
+                Одностраничное приложение
+              </a>
+              <a
+                target="_blank"
+                href="https://tomat1990yandex.github.io/mesto/"
+                rel="noreferrer"
+              >
+                <img
+                  src={arrow}
+                  className="portfolio__icon"
+                  alt="Иконка для ссылки на проект"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

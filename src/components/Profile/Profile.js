@@ -1,59 +1,97 @@
-import React, {useState} from 'react';
+import { React, useEffect, useContext } from "react";
 
-import './Profile.css';
-import Header from "../Header/Header";
+import { Link } from "react-router-dom";
 
-function Profile({ menuIsOpened, openMenu, closeMenu, loggedIn }) {
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-  const [isEditing, setIsEditing] = useState(false);
+import useFormAndValidation from "../../utils/useFormAndValidation";
 
-  function handleEditProfile(e) {
+import Preloader from "../Movies/Preloader/Preloader";
+
+import "./Profile.css";
+
+function Profile({ onUpdate, isLoading, onLogout, isComplitedUpdate }) {
+  let { values, errors, isValid, handleChange } =
+    useFormAndValidation();
+
+  const currentUser = useContext(CurrentUserContext);
+
+  useEffect(() => {
+    values.email = currentUser.email;
+    values.name = currentUser.name;
+  }, [currentUser]);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setIsEditing(true);
-  }
-  return(
-    <div className="profile">
+    onUpdate({ email: values.email, name: values.name });
+  };
 
-      <Header
-        loggedIn={loggedIn}
-        isProfilePageActive={true}
-        menuIsOpened={menuIsOpened}
-        openMenu={openMenu}
-        closeMenu={closeMenu}
-      />
-
-      <h2 className="register__title account__title">Привет, пользователь!</h2>
-      <form method="post" className="profile__form" name="profile-form" noValidate>
-        <div className="profile__field-wrapper">
-          <label className="profile__label">Имя
-          </label>
-          <input type="text" className="profile__input" required disabled={!isEditing} name="profile-name-input"
-                 placeholder="Введите новое имя" minLength="2" maxLength="30"/>
-        </div>
-        <div className="profile__field-wrapper">
-          <label className="profile__label">Email
-          </label>
-          <input type="text" className="profile__input" required disabled={!isEditing} name="profile-email-input"
-                 placeholder="Введите новый email" minLength="7" maxLength="200"/>
-        </div>
-        <div className="profile__form-actions">
-          {!isEditing ? (
-            <div className="profile__form-actions-wrapper">
-              <button className="profile__action-button profile__action-button_action_edit" onClick={handleEditProfile}>
-                Редактировать</button>
-              <button className="profile__action-button profile__action-button_action_logout">
-                Выйти из аккаунта</button>
+  return (
+    <section className="profile">
+      <form noValidate onSubmit={handleSubmit} className="profile__form">
+        <h2 className="profile__title">Привет, {currentUser.name}!</h2>
+        {isLoading ? (
+          <Preloader />
+        ) : (
+          <>
+            <div className="profile__input-area">
+              <label className="profile__label">Имя</label>
+              <input
+                name="name"
+                type="text"
+                value={values.name || currentUser.name || "" }
+                minLength="2"
+                maxLength="30"
+                pattern="[a-zA-Zа-яА-Я\sёЁ-]{2,30}"
+                required
+                onChange={handleChange}
+                className="profile__input"
+                autoComplete='off'
+              />
             </div>
-          ) : (
-            <div className="profile__form-actions-wrapper">
-              <button className="profile__action-button profile__action-button_action_save">
-                Сохранить</button>
+            <span className="profile__input-error">{errors.name}</span>
+            <div className="profile__input-area">
+              <label className="profile__label">E-mail</label>
+              <input
+                name="email"
+                type="email"
+                value={values.email || currentUser.email || "" }
+                pattern="[A-z0-9_.-]{1,}@[A-z0-9_.-]{1,}[.][A-z]{2,8}"
+                required
+                onChange={handleChange}
+                className="profile__input"
+                autoComplete='off'
+              />
             </div>
-          )}
-        </div>
+            {isComplitedUpdate ? (
+            <span className="profile__input-error">Данные пользователя успешно обновлены!</span>
+            ) : null}
+            <span className="profile__input-error">{errors.email}</span>
+            <button
+              type="submit"
+              className={`profile__button ${
+                (!isValid ||
+                  (values.email === currentUser.email &&
+                    values.name === currentUser.name)) &&
+                'profile__button_disabled'
+              }`}
+              onClick={handleSubmit}
+            >
+              Редактировать
+            </button>
+            <Link to="/">
+              <button
+                type="reset"
+                onClick={onLogout}
+                className="profile__button profile__button_red"
+              >
+                Выйти из аккаунта
+              </button>
+            </Link>
+          </>
+        )}
       </form>
-
-    </div>
+    </section>
   );
 }
 

@@ -5,7 +5,7 @@ import "./SearchForm.css";
 import useFormAndValidation from "../../../utils/useFormAndValidation";
 import find from "../../../images/find-button.svg";
 
-function SearchForm({onSearchClick}) {
+function SearchForm({onSearchClick, searchedMovieInput}) {
   const {
     values,
     errors,
@@ -39,7 +39,7 @@ function SearchForm({onSearchClick}) {
         className={`movie__search-input ${
           errors.movieSearch && "movie__search-input_error"
         }`}
-        value={values.movieSearch || ""}
+        value={values.movieSearch || searchedMovieInput || ""}
         onChange={handleChange}
         autoComplete="off"
       />

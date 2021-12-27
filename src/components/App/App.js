@@ -82,9 +82,9 @@ function App() {
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('token');
     localStorage.removeItem('movies');
-    localStorage.removeItem('savedMovies');
     localStorage.removeItem('savedMoviesSearch');
     localStorage.removeItem('searchMovieInput');
+    localStorage.removeItem('searchedMovieInput');
     setLoggedIn(false);
     history.push('/');
   }
@@ -190,6 +190,7 @@ function App() {
           <ProtectedRoute
             exact
             path="/movies"
+            location={location.pathname}
             loggedIn={loggedIn}
             component={Movies}
             myMovies={savedMovies}

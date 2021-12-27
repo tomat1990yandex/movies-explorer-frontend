@@ -7,6 +7,7 @@ import moviesApi from "../../utils/MoviesApi";
 import filterMovies from "../../utils/moviesFilter";
 import filterShortMovies from "../../utils/shortMoviesFilter";
 import checkIsMovieSaved from "../../utils/checkIsMovieSaved";
+import location from "./../App/App";
 
 import SearchForm from "./SearchForm/SearchForm";
 import FilterCheckbox from "./FilterCheckbox/FilterCheckbox";
@@ -20,6 +21,7 @@ function Movies({myMovies, onSave, onDelete}) {
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [isCheckboxActive, setIsCheckboxActive] = useState(false);
   const [isLocalStorageChanged, setIsLocalStorageChanged] = useState(false);
+  const [searchedMovieInput, setSearchedMovieInput] = useState("");
 
   function getSearchMovieInput(input) {
     setSearchMovieInput(input.toLowerCase());
@@ -55,7 +57,7 @@ function Movies({myMovies, onSave, onDelete}) {
           const filteredMovies = filterMovies(res, searchMovieInput);
 
           localStorage.setItem(
-            "searchMovieInput",
+            "searchedMovieInput",
             JSON.stringify(searchMovieInput)
           );
 
@@ -88,12 +90,18 @@ function Movies({myMovies, onSave, onDelete}) {
     }
   }, [isCheckboxActive]);
 
+  useEffect(() => {
+    const searched = JSON.parse(localStorage.getItem("searchedMovieInput"));
+    setSearchedMovieInput(searched);
+    console.log(searched);
+  }, [location]);
+
   return (
     <section className="movies">
       <div className="movies__container">
         <SearchForm
           onSearchClick={getSearchMovieInput}
-          searchMovieInput={searchMovieInput}
+          searchedMovieInput={searchedMovieInput}
         />
         <FilterCheckbox
           isChecked={isCheckboxActive}
